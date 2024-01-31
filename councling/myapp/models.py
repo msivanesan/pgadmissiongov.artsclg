@@ -109,7 +109,17 @@ class PgStudentDetails(models.Model):
     distric=models.CharField(max_length=30,null=False)
     community=models.CharField(max_length=5,choices=COMUNNITY)
     Department=models.ForeignKey(Department,on_delete=models.CASCADE)
-    percentageoptained=models.CharField(max_length=3,null=False)
+    percentageoptained=models.CharField(max_length=5,null=False)
+    address=models.CharField(max_length=130,null=True,blank=True)
+    student=models.OneToOneField(CustomUserStudent,on_delete=models.CASCADE)
+    photo=models.ImageField(upload_to=Photo_rename, validators=[validate_image_size],null=True,blank=True)
+    aadhar=models.ImageField(upload_to=aadhar_rename, validators=[validate_image_size],null=True,blank=True)
+    marksheet=models.ImageField(upload_to=Marksheet_rename, validators=[validate_image_size],null=True,blank=True)
+    community_doc=models.ImageField(upload_to=community_rename, validators=[validate_image_size],null=True,blank=True)
+    special_doc=models.ImageField(upload_to=special_documents_rename,null=True,blank=True, validators=[validate_image_size])
+    details_submited=models.BooleanField(default=False)
+    status=models.CharField(max_length=30,null=False)
+
 
     @property
     def username(self):
@@ -125,14 +135,3 @@ class StoreoverallData(models.Model):
     def __str__(self):
         return str(self.datafile)
 
-
-class StoreFileOFUser(models.Model):
-    student=models.OneToOneField(CustomUserStudent,on_delete=models.CASCADE)
-    photo=models.ImageField(null=False,upload_to=Photo_rename, validators=[validate_image_size])
-    aadhar=models.ImageField(null=False,upload_to=aadhar_rename, validators=[validate_image_size])
-    marksheet=models.ImageField(null=False,upload_to=Marksheet_rename, validators=[validate_image_size])
-    community_doc=models.ImageField(null=False,upload_to=community_rename, validators=[validate_image_size])
-    special_doc=models.ImageField(upload_to=special_documents_rename,null=True,blank=True, validators=[validate_image_size])
-
-    def __str__(self):
-        return self.student.username

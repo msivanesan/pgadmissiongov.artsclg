@@ -4,7 +4,7 @@ from django.utils.crypto import get_random_string
 import csv
 from django.shortcuts import render, redirect,get_object_or_404
 from django.urls.resolvers import URLPattern
-from . models import CustomUserStaff,CustomUserStudent,Department,PgStudentDetails,StoreoverallData,StoreFileOFUser
+from . models import CustomUserStaff,CustomUserStudent,Department,PgStudentDetails,StoreoverallData
 from django.contrib.auth.admin import UserAdmin
 from . forms import CustomUserStaffCreationForm, CustomUserStaffChangeForm
 from django.http import HttpResponse
@@ -83,19 +83,21 @@ class PgStudentDetailsadmin(admin.ModelAdmin):
                    print()
                    if user:
                         de=row['Department'].lower()
-                        dept=Department.objects.get(name=de)
-                        if not dept:
-                            print("no department")
-                        else:
-                            user.set_password(password)
-                            user.password_created = password  # Store the raw password if necessary
-                            user.save()
-                            data,crt=PgStudentDetails.objects.get_or_create(student=user,name=row['Name'],gender=row['Gender'].lower(),distric=row['District'],community=row['Community'].lower(),percentageoptained=row['Percentage_mark'],Department=dept)
-                            if data:
-                                print("details already exsit ",user)
+                        try:
+                            dept=Department.objects.get(name=de)
+                            if not dept:
+                                print("no department")
                             else:
-                                print("error in detail :",user)
-
+                                user.set_password(password)
+                                user.password_created = password  # Store the raw password if necessary
+                                user.save()
+                                data,crt=PgStudentDetails.objects.get_or_create(student=user,name=row['Name'],gender=row['Gender'].lower(),distric=row['District'],community=row['Community'].lower(),percentageoptained=row['Percentage_mark'],Department=dept,status='created')
+                                if data:
+                                    print("details already exsit ",user)
+                                else:
+                                    print("error in detail :",user)
+                        except  Exception as e:
+                            print("no department mach",user)
                    else:
                         print("User data failed !:")
                 StoreoverallData.objects.create(datafile=data_file)
@@ -110,5 +112,5 @@ admin.site.register(CustomUserStudent, CustomUserStudentAdmin)
 admin.site.register(Department)
 admin.site.register(PgStudentDetails,PgStudentDetailsadmin)
 admin.site.register(StoreoverallData)
-admin.site.register(StoreFileOFUser)
+
 

@@ -1,5 +1,5 @@
 from django import forms
-from .models import CustomUserStudent,CustomUserStaff,StoreoverallData
+from .models import CustomUserStudent,CustomUserStaff,StoreoverallData,PgStudentDetails
 from django.contrib.auth.forms import UserCreationForm,UserChangeForm
 from django.contrib.auth import authenticate
 
@@ -46,4 +46,8 @@ class customUserLoginForm(forms.Form):
         
         return cleaned_data
 
-
+#get data
+class PgDataForm(forms.ModelForm):
+    class Meta:
+        model=PgStudentDetails
+        exclude=('student','status','details_submited',)
