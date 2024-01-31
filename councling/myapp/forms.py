@@ -1,5 +1,5 @@
 from django import forms
-from .models import CustomUserStudent,CustomUserStaff
+from .models import CustomUserStudent,CustomUserStaff,StoreoverallData
 from django.contrib.auth.forms import UserCreationForm,UserChangeForm
 from django.contrib.auth import authenticate
 
@@ -45,3 +45,5 @@ class customUserLoginForm(forms.Form):
             raise forms.ValidationError('Invalid login')
         
         return cleaned_data
+
+

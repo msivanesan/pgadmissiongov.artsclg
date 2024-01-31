@@ -1,0 +1,15 @@
+
+
+
+
+
+<form method="post">
+    {% csrf_token %}
+    <input type="text" name="opt" placeholder="otp" required>
+    <button type="submit">Confirm</button>
+</form>
+
+
+{% if err in  errormessage%}
+<p>err</p>
+{%endif%}
