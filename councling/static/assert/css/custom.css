@@ -12010,22 +12010,23 @@ body {
 }
 .striped-view li:nth-child(odd) {
   background-color: #BCD4E6;
+  text-transform: uppercase;
 }
 .striped-view li:nth-child(even) {
   background-color: #ffffff;
+  text-transform: uppercase;
 }
 
 .title-heading {
   height: 4rem;
   width: 100%;
   text-align: center;
-  text-transform: capitalize;
 }
 .title-heading p {
   position: relative;
+  color: #000;
   padding-top: 15px;
-  color: #ffffff;
-  font-style: italic;
+  text-transform: uppercase;
 }
 
 .pill-button {
@@ -12062,8 +12063,10 @@ body {
   padding-bottom: 1.2rem;
 }
 .table-striped tbody tr:nth-child(odd) th, .table-striped tbody tr:nth-child(odd) td {
+  text-transform: capitalize;
   background-color: #BCD4E6;
 }
 .table-striped tbody tr:nth-child(even) th, .table-striped tbody tr:nth-child(even) td {
+  text-transform: capitalize;
   background-color: #ffffff;
 }/*# sourceMappingURL=custom.css.map */

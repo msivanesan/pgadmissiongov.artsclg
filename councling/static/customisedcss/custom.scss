@@ -39,11 +39,13 @@ body{
     li{
       &:nth-child(odd) {
         background-color: $secondary;
+        text-transform: uppercase;
       }
       
       /* Style for even items */
       &:nth-child(even) {
         background-color: $white ;
+        text-transform: uppercase;
       }
     }
         
@@ -54,12 +56,11 @@ body{
     height: 4rem;
     width: 100%;
     text-align:center ;
-    text-transform: capitalize;
     p{
       position: relative;
+      color: $balck;
       padding-top: 15px;
-      color: $white;
-      font-style: italic;
+      text-transform: uppercase;
     }
   }
 
@@ -106,6 +107,7 @@ body{
       // Nesting th, td inside odd rows
       &:nth-child(odd) {
         th, td {
+          text-transform: capitalize;
           background-color: $secondary;
         }
       }
@@ -113,6 +115,7 @@ body{
       // Nesting th, td inside even rows
       &:nth-child(even) {
         th, td {
+          text-transform: capitalize;
           background-color: $white;
         }
       }
