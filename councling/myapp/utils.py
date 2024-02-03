@@ -10,4 +10,4 @@ def otp_generate(request):
     valid_date=datetime.now() + timedelta(minutes=1)
     request.session['valid_date']=str(valid_date)
 
-    print(f'The OTP is :{otp}')
+    print(f'The OTP is :  {otp}')

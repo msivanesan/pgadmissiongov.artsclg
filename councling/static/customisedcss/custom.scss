@@ -1,0 +1,121 @@
+@import "../bootstrap/scss/bootstrap.scss";
+@import "variable";
+
+
+body{
+  margin: 0;
+  padding: 0;
+  margin: border-box;
+}
+// make scrolabe
+.scrollable-div{
+  height: 80vh;
+  overflow-y: auto;
+}
+
+// baground
+.bg{
+    background-color: $background;
+}
+
+.clglogo{
+    background-color: rgb(150, 0, 0);
+    height: 15vh;
+}
+
+.contentbody{
+    height: 84vh;
+
+
+}
+.group-list{
+    padding: 1.2rem;
+}
+
+
+/* Style for odd items */
+
+.striped-view{
+    li{
+      &:nth-child(odd) {
+        background-color: $secondary;
+      }
+      
+      /* Style for even items */
+      &:nth-child(even) {
+        background-color: $white ;
+      }
+    }
+        
+    
+  }
+
+  .title-heading{
+    height: 4rem;
+    width: 100%;
+    text-align:center ;
+    text-transform: capitalize;
+    p{
+      position: relative;
+      padding-top: 15px;
+      color: $white;
+      font-style: italic;
+    }
+  }
+
+  .pill-button{
+    padding: 10px;
+    border-radius: 100px;
+    color: $white;
+  }
+  .content{
+    height: 85vh;
+  }
+
+  .filter-option{
+    text-decoration: none;
+    color: black;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    display: block;
+  }
+  
+  .view-filter{
+    background: $white;
+    li{
+      display: block;
+    }
+    
+  }
+
+
+
+.table-striped {
+  thead{
+    th{
+      position: sticky;
+      top:0;
+      height: 4rem;
+      background: #0d6efd;
+      padding-bottom: 1.2rem;
+    }
+  }
+  tbody {
+    tr {
+      // Nesting th, td inside odd rows
+      &:nth-child(odd) {
+        th, td {
+          background-color: $secondary;
+        }
+      }
+
+      // Nesting th, td inside even rows
+      &:nth-child(even) {
+        th, td {
+          background-color: $white;
+        }
+      }
+    }
+  }
+}

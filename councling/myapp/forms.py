@@ -10,7 +10,6 @@ class CustomUserStaffCreationForm(UserCreationForm):
         model = CustomUserStaff
         fields = ('username','email','phone_number','department')
 
-
 class CustomUserStaffChangeForm(UserChangeForm):
     class Meta(UserChangeForm.Meta):
         model = CustomUserStaff
@@ -22,16 +21,13 @@ class CustomUserStudentCreationForm(UserCreationForm):
         model = CustomUserStudent
         fields = ('username','email','phone_number',)
 
-
 class CustomUserStudentChangeForm(UserChangeForm):
     class Meta(UserChangeForm.Meta):
         model = CustomUserStudent
         fields = ('username','email','phone_number', 'is_active', 'is_staff')
 
 
-
 #student login forms
-
 class customUserLoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
@@ -50,4 +46,4 @@ class customUserLoginForm(forms.Form):
 class PgDataForm(forms.ModelForm):
     class Meta:
         model=PgStudentDetails
-        exclude=('student','status','details_submited',)
+        exclude=('student','status','details_submited','resevation','fees')

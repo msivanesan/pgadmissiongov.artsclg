@@ -1,0 +1,26 @@
+{% extends "main.html"%}
+{% block title %}controler{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid m-0 p-0">
+    <div class="row clglogo">
+        <div class="col-md-12 col-xl-12 col-xxl-12">
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-md-2 col-xl-2 col-xxl-2 ">
+            {% include 'pg/components/seatavalabe.html' %}
+        </div>
+        <div class="col-md-8 col-xl-8 col-xxl-8 bg ">
+            {% include 'pg/components/studentlist.html' %}
+
+        </div>
+        <div class="col-md-2 col-xl-2 col-xxl-2 bg  m-0 p-0" style="background-color: white;">
+            {% include 'pg/components/cotafilter.html' %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+

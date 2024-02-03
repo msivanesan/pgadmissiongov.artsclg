@@ -10,7 +10,7 @@ from datetime import datetime
 from .utils import otp_generate
 
 #user login 
-def Student_login(request):
+def user_login(request):
     error_message=None
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -44,15 +44,20 @@ def otp_auth(request):
                     del request.session['otp_key']
                     del request.session['valid_date']
                     del request.session['password']
-                    return redirect('register')
+                    if user.role=='department':
+                        return HttpResponse("department")
+                    elif user.role=='student':
+                        return redirect('pgregister')
+                    else:
+                        return HttpResponse("error")
                 else:
                     error_message='opt not valid'
             else:
                 error_message='pot expried'
         else:
             error_message='somethig went wrong'
-
-    return render(request,'otp_auth.html',{'errormessage':error_message})
+            return render(request,'otp_auth.html',{'error':error_message})
+    return render(request,'otp_auth.html',{'error':error_message})
 
 
 #user logout
@@ -63,7 +68,7 @@ def user_logout(request):
 
 
 #to view the register the pg data
-@login_required(login_url="user_login")
+@login_required(login_url="login")
 def pgregister(request):
     try:
         data = PgStudentDetails.objects.get(student=request.user)

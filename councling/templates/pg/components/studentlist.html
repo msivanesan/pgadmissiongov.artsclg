@@ -1,0 +1,23 @@
+
+<div class="scrollable-div">
+<table class="table table-hover table-striped m-0 p-0">
+    <thead class="border-bottom border-white border-3">
+        <th>ID</th>
+        <th>NAME</th>
+        <th>GENDER</th>
+        <th>PERCENTAGE</th>
+        <th>COMMUNITY</th>
+    </thead>
+    <tbody class="border-white border-3">
+      {% for items in data %}
+      <tr class="m-2 border border-secondary " onclick="callurl('{{ items.student.username }}')">
+                <th scope="row">{{items.student.username}}</th>
+                <td>{{items.name}}</td>
+                <td>{{items.gender}}</td>
+                <td>{{items.percentageoptained}}</td>
+                <td>{{items.community}}</td>
+            </tr>
+        {% endfor %}
+  </tbody>
+</table>
+</div>

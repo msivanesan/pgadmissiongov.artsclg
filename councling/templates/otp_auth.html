@@ -2,6 +2,10 @@
 
 {% block title %}verification{% endblock %}
 {%block content%}
+{% if error%}
+<p>{{error}}</p>
+{%endif%}
+
 <form method="post">
     {% csrf_token %}
     <input type="text" name="opt" placeholder="otp" required>

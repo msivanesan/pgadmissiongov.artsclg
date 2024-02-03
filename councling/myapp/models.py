@@ -8,6 +8,12 @@ class Department(models.Model):
     name=models.CharField(max_length=30,null=False,unique=True)
     ug_couse=models.CharField(max_length=30,null=False)
     pg_course=models.CharField(max_length=30,null=False)
+    pg_oc=models.IntegerField(default=0,null=False)
+    pg_bc=models.IntegerField(default=0,null=False)
+    pg_sc=models.IntegerField(default=0,null=False)
+    pg_st=models.IntegerField(default=0,null=False)
+    pg_mbc=models.IntegerField(default=0,null=False)
+
 
     def __str__(self):
         return self.name
@@ -34,11 +40,18 @@ class CustomUserManager(BaseUserManager):
 
 # custom user model for staff
 class CustomUserStaff(AbstractBaseUser,PermissionsMixin):
+    ROLE=[
+        ('controler','CONTROLER'),
+        ('department','DEPARTMENT'),
+        ('principal','PRINCIPAL'),
+        ('office','OFFICE')
+    ]
     email = models.EmailField(unique=True)
     username = models.CharField(max_length=30, unique=True)
     phone_number=models.CharField(max_length=10)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=True)
+    role=models.CharField(max_length=10,null=True,choices=ROLE)
     department=models.OneToOneField(Department,on_delete=models.CASCADE,null=True,blank=True)
     groups = models.ManyToManyField(
         Group,
@@ -66,6 +79,7 @@ class CustomUserStudent(AbstractBaseUser,PermissionsMixin):
     username = models.CharField(max_length=30, unique=True)
     phone_number=models.CharField(max_length=10)
     is_active = models.BooleanField(default=True)
+    role=models.CharField(max_length=10,default='student')
     is_staff = models.BooleanField(default=False)
     password_created=models.CharField(max_length=15,null=False,blank=False)
     groups = models.ManyToManyField(
@@ -119,6 +133,9 @@ class PgStudentDetails(models.Model):
     special_doc=models.ImageField(upload_to=special_documents_rename,null=True,blank=True, validators=[validate_image_size])
     details_submited=models.BooleanField(default=False)
     status=models.CharField(max_length=30,null=False)
+    resevation=models.CharField(max_length=10, null=True,blank=True)
+    fees=models.BooleanField(default=False)
+
 
 
     @property
