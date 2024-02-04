@@ -1,7 +1,24 @@
 {% extends "main.html"%}
-{% block title %}Student Details{% endblock %}
-
+{% block title %}controler{% endblock %}
 
 {% block content %}
 
+<div class="container-fluid m-0 p-0" style="max-width: 99%;">
+    <div class="row clglogo">
+        <div class="col-md-12 col-xl-12 col-xxl-12">
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-md-2 col-xl-2 col-xxl-2 ">
+            {% include 'pg/components/seatavalabe.html' %}
+        </div>
+        <div class="col-md-10 col-xl-10 col-xxl-10 bg m-0 p-0" style="max-height: 84vh; overflow-y: auto;">
+            {% include 'pg/components/studentprofile.html' %}
+
+        </div>
+
+    </div>
+</div>
+
 {% endblock %}
+

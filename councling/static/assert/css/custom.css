@@ -12107,4 +12107,23 @@ body {
 }
 .deptopt:hover a {
   color: black;
+}
+
+.img-passport {
+  max-width: 300px;
+  max-height: 300px;
+}
+
+.table-striped-nonsticky thead th {
+  height: 4rem;
+  background: #0d6efd;
+  padding-bottom: 1.2rem;
+}
+.table-striped-nonsticky tbody tr:nth-child(odd) th, .table-striped-nonsticky tbody tr:nth-child(odd) td {
+  text-transform: capitalize;
+  background-color: #BCD4E6;
+}
+.table-striped-nonsticky tbody tr:nth-child(even) th, .table-striped-nonsticky tbody tr:nth-child(even) td {
+  text-transform: capitalize;
+  background-color: #ffffff;
 }/*# sourceMappingURL=custom.css.map */

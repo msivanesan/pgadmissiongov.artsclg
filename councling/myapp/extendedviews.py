@@ -22,7 +22,7 @@ def constudent(request,department, userid):
     try:
         data = models.PgStudentDetails.objects.filter(student__username=userid).filter(details_submited=True)
         context = {'data': data}
-        return render(request, 'controler/listpage.html', context)
+        return render(request, 'controler/student.html', context)
     except models.PgStudentDetails.DoesNotExist:
         raise Http404("Student details not found.")
     except Exception as e:
