@@ -2,7 +2,9 @@ from django.shortcuts import render, redirect,get_object_or_404
 from django.http import HttpResponse,Http404
 from . import models
 
-
+def deptcontrol(request):
+    data=models.Department.objects.all()
+    return render(request,'controler/index.html',{'department':data})
 
 def controller(request,department):
     try:

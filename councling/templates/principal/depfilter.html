@@ -1,8 +1,11 @@
 <div class="bg-primary title-heading"><p><b>FILTER</b></p></div>
         <ol class="list-group view-filter list-group-numbered  striped-view " >
+            <li class="border-bottom" >
+                <a  href="{% url 'principal' %}?dep=all" class="fw-bold filter-option">ALL</a>          
+            </li>   
             {% for dept in department%}
           <li class="border-bottom" >
-              <a  href="/" class="fw-bold filter-option">{{dept}}</a>          
+              <a  href="{% url 'principal' %}?dep={{ dept.name }}" class="fw-bold filter-option">{{dept}}</a>          
           </li>   
           {%endfor%}                  
       </ol>
