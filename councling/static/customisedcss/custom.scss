@@ -201,3 +201,15 @@ body{
     }
   }
 }
+
+/* styles.css */
+.form-control::placeholder {
+  color: rgb(34, 13, 228);
+}
+/* For cross-browser compatibility */
+.form-control:-ms-input-placeholder {
+  color: rgb(34, 13, 228);
+}
+.form-control::-ms-input-placeholder {
+  color: rgb(34, 13, 228);
+}

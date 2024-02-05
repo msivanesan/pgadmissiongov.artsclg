@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<div class="container-fluid m-0 p-0">
+<div class="container-fluid m-0 p-0" style="max-width: 99%;">
     <div class="row clglogo">
         <div class="col-md-12 col-xl-12 col-xxl-12">
         </div>
@@ -16,7 +16,7 @@
             {% include 'pg/components/studentlist.html' %}
 
         </div>
-        <div class="col-md-2 col-xl-2 col-xxl-2 bg  m-0 p-0" style="background-color: white;">
+        <div class="col-md-2 col-xl-2 col-xxl-2 bg  m-0 p-0" style="background-color: white; overflow-y: auto; height: 82vh;">
             {% include 'controler/filter.html' %}
         </div>
     </div>

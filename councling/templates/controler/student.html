@@ -1,5 +1,5 @@
 {% extends "main.html"%}
-{% block title %}controler{% endblock %}
+{% block title %}controler student{% endblock %}
 
 {% block content %}
 
@@ -14,7 +14,15 @@
         </div>
         <div class="col-md-10 col-xl-10 col-xxl-10 bg m-0 p-0" style="max-height: 84vh; overflow-y: auto;">
             {% include 'pg/components/studentprofile.html' %}
-
+            <form action="" method="post" class="d-flex justify-content-between  border-bottom border-5 bg-primary">
+                {% csrf_token %}
+                <button type="submit" name="action"  value="forward" class="btn btn-success ">Froward</button>
+                <div class="input-group ">
+                    <span class="input-group-text bg-dark text-light" id="remark">Remark</span>
+                    <input type="text" class="form-control bg-dark-subtle" name="remark" placeholder="remark"  aria-describedby="remark" >
+                  </div>
+                <button type="submit" name="action" value="reject" class="btn btn-danger ">Reject</button>
+            </form>
         </div>
 
     </div>

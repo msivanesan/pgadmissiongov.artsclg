@@ -89,7 +89,7 @@ class PgStudentDetailsadmin(admin.ModelAdmin):
                             user.set_password(password)
                             user.password_created = password  # Store the raw password if necessary
                             user.save()
-                            data,crt=PgStudentDetails.objects.get_or_create(student=user,name=row['Name'],gender=row['Gender'].lower(),distric=row['District'],community=row['Community'].lower(),percentageoptained=row['Percentage_mark'],Department=dept,status='created')
+                            data,crt=PgStudentDetails.objects.get_or_create(student=user,name=row['Name'],gender=row['Gender'].lower(),distric=row['District'],community=row['Community'].lower(),percentageoptained=row['Percentage_mark'],Department=dept,status='applied')
                             if data:
                                 ls=[username,'data updated succesfully']
                                 reportList.append(ls)

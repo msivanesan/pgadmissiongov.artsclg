@@ -12126,4 +12126,21 @@ body {
 .table-striped-nonsticky tbody tr:nth-child(even) th, .table-striped-nonsticky tbody tr:nth-child(even) td {
   text-transform: capitalize;
   background-color: #ffffff;
+}
+
+/* styles.css */
+.form-control::-moz-placeholder {
+  color: rgb(34, 13, 228);
+}
+.form-control::placeholder {
+  color: rgb(34, 13, 228);
+}
+
+/* For cross-browser compatibility */
+.form-control:-ms-input-placeholder {
+  color: rgb(34, 13, 228);
+}
+
+.form-control::-ms-input-placeholder {
+  color: rgb(34, 13, 228);
 }/*# sourceMappingURL=custom.css.map */

@@ -10,7 +10,9 @@ class Department(models.Model):
     pg_course=models.CharField(max_length=30,null=False)
     pg_oc=models.IntegerField(default=0,null=False)
     pg_bc=models.IntegerField(default=0,null=False)
+    pg_bcm=models.IntegerField(default=0,null=False)
     pg_sc=models.IntegerField(default=0,null=False)
+    pg_sca=models.IntegerField(default=0,null=False)
     pg_st=models.IntegerField(default=0,null=False)
     pg_mbc=models.IntegerField(default=0,null=False)
 
@@ -117,23 +119,61 @@ class PgStudentDetails(models.Model):
         ('st','ST'),
         ('mbc','MBC')
     ]
+    BOOLOPT=[
+        ('yes','YES'),
+        ('no','NO')
+    ]
+    MAR_STATUS=[
+        ('single','SINGLE'),
+        ('married','MARRIED')
+    ]
+    RELIGION=[
+        ('hindu','HINDU'),
+        ('muslim','MUSLIM'),
+        ('cristin','CRISTIN')
+    ]
+    STATUS=[
+        ('applied','APPLIED'),
+        ('controler','CONTROLER'),
+        ('department','DEPARTMENT'),
+        ('admited','ADMITED'),
+        ('rejected','REJECTED')
+    ]
+    #PERSONAL DETAILS
     student=models.OneToOneField(CustomUserStudent,on_delete=models.CASCADE)
     name=models.CharField(max_length=30,null=False)
+    fathername=models.CharField(max_length=30,null=True,blank=True)
     gender=models.CharField(max_length=10,choices=GENDER)
-    distric=models.CharField(max_length=30,null=False)
+    dateofbirth=models.DateField(null=True,blank=True)
     community=models.CharField(max_length=5,choices=COMUNNITY)
+    religion=models.CharField(max_length=20,choices=RELIGION,null=True,blank=True)
+    maratail_status=models.CharField(max_length=10,null=True,blank=True,choices=MAR_STATUS)
+    pysically_chalanged=models.CharField(max_length=5,choices=BOOLOPT,null=True,blank=True)
+    sports=models.CharField(max_length=5,choices=BOOLOPT,null=True,blank=True)
+    aadhar=models.CharField(max_length=30,null=True,blank=True)
+    address=models.CharField(max_length=130,null=True,blank=True)
+    distric=models.CharField(max_length=30,null=False)
+    #educational details
     Department=models.ForeignKey(Department,on_delete=models.CASCADE)
     percentageoptained=models.CharField(max_length=5,null=False)
-    address=models.CharField(max_length=130,null=True,blank=True)
-    student=models.OneToOneField(CustomUserStudent,on_delete=models.CASCADE)
-    photo=models.ImageField(upload_to=Photo_rename, validators=[validate_image_size],null=True,blank=True)
-    aadhar=models.ImageField(upload_to=aadhar_rename, validators=[validate_image_size],null=True,blank=True)
-    marksheet=models.ImageField(upload_to=Marksheet_rename, validators=[validate_image_size],null=True,blank=True)
+    instute_name=models.CharField(max_length=30,null=True,blank=True)
+    degree=models.CharField(max_length=30,null=True,blank=True)
+    mode_of_study=models.CharField(max_length=30,null=True,blank=True)
+    medium=models.CharField(max_length=30,null=True,blank=True)
+    acadamic_year=models.CharField(max_length=30,null=True,blank=True)
+    
+    #DOCUMENTS
+    photo_doc=models.ImageField(upload_to=Photo_rename, validators=[validate_image_size],null=True,blank=True)
+    aadhar_doc=models.ImageField(upload_to=aadhar_rename, validators=[validate_image_size],null=True,blank=True)
+    marksheet_doc=models.ImageField(upload_to=Marksheet_rename, validators=[validate_image_size],null=True,blank=True)
     community_doc=models.ImageField(upload_to=community_rename, validators=[validate_image_size],null=True,blank=True)
     special_doc=models.ImageField(upload_to=special_documents_rename,null=True,blank=True, validators=[validate_image_size])
+    
+    #DEPARTMENT FIELDS
     details_submited=models.BooleanField(default=False)
-    status=models.CharField(max_length=30,null=False)
+    status=models.CharField(max_length=30,null=False, choices=STATUS)
     resevation=models.CharField(max_length=10, null=True,blank=True)
+    remark=models.CharField(max_length=150,null=True,blank=True)
     fees=models.BooleanField(default=False)
 
 

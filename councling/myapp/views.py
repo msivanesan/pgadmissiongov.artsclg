@@ -83,7 +83,7 @@ def pgregister(request):
                 data = form.save(commit=False)
                 data.student = request.user
                 data.details_submited=True
-                data.status = "controller"
+                data.status = "controler"
                 data.save()
                 return HttpResponse("Data uploaded successfully")
         else:
