@@ -33,13 +33,50 @@
 
 <form action="" method="post" enctype="multipart/form-data" id="uploadForm">
     {% csrf_token %}
-    <input type="file" name="datafile" id="import_file">
+    <input type="file" name="datafile" id="import_file" required>
     <button type="submit">Upload</button>
 </form>
 
 <script>
-document.getElementById('uploadForm').onsubmit = function() {
+document.getElementById('uploadForm').onsubmit = function(e) {
+    e.preventDefault(); // Prevent the normal form submission
     document.getElementById('loading').style.display = 'block';
+    
+    var formData = new FormData(this);
+    console.log(formData)
+    fetch(this.action, {
+        method: 'POST',
+        body: formData,
+    })
+    .then(response => {
+    if(response.ok && response.headers.get("Content-Type").includes("text/csv")) {
+        return response.blob(); // Proceed if the response is a CSV file
+    } else {
+        document.getElementById('loading').style.display = 'none';
+        // Optionally, log or display the unexpected Content-Type for debugging
+        console.error('Unexpected Content-Type:', response.headers.get("Content-Type"));
+        throw new Error('Unexpected response type.');
+    }
+    })
+    .then(blob => {
+        var url = window.URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'data_list.csv';
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        a.remove(); // This is more consistent across browsers than document.body.removeChild(a);
+        document.getElementById('loading').style.display = 'none';
+        setTimeout(function() {
+            window.location.reload();
+        }, 100); 
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert("Failed to process the file download.");
+        // Keep the loading screen hidden in case of error
+    });
 };
 </script>
 {% endblock %}

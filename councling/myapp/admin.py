@@ -39,10 +39,7 @@ class CustomUserStaffAdmin(UserAdmin):
         ),
     )
 
-
-
-
-#student admi9n register
+#student admin register
 class CustomUserStudentAdmin(UserAdmin):
     add_form = CustomUserStaffCreationForm
     form = CustomUserStaffChangeForm
@@ -65,7 +62,6 @@ class CustomUserStudentAdmin(UserAdmin):
 
 
 #dstudent detail register
-
 class PgStudentDetailsadmin(admin.ModelAdmin):
     list_display = ['username','name']
     search_fields=['student__username','name']
@@ -73,51 +69,64 @@ class PgStudentDetailsadmin(admin.ModelAdmin):
     def get_urls(self) :
         urls=super().get_urls()
         my_urls=[
-             path('uploade/', self.admin_site.admin_view(self.upload_data), name='upload_data'),
+            path('uploade/', self.admin_site.admin_view(self.upload_data), name='upload_data'),
         ]
         return my_urls+urls
     
-    def upload_data(self,request):
-        reportList=[]
-        if request.method=='POST' and 'datafile' in request.FILES:
+
+    def upload_data(self, request):
+        reportList = [['Application ID', 'Status']]  # Adjust the header for CSV output
+        if request.method == 'POST' and 'datafile' in request.FILES:
             try:
-                data_file=request.FILES['datafile']
+                data_file = request.FILES['datafile']
                 decoded_file = data_file.read().decode('utf-8').splitlines()
                 reader = csv.DictReader(decoded_file)
                 for row in reader:
-                   ls=[]
-                   username=row['App_No']
-                   email=row['Email']
-                   phonenumber=row['Mobile']
-                   password = get_random_string(10)
-                   user, created = CustomUserStudent.objects.get_or_create(email=email,defaults={'username': username, 'phone_number': phonenumber} )
-                   if user:
-                        de=row['Department'].lower()
-                        try:
-                            dept=Department.objects.get(name=de)
-                            user.set_password(password)
-                            user.password_created = password  # Store the raw password if necessary
-                            user.save()
-                            data,crt=PgStudentDetails.objects.get_or_create(student=user,name=row['Name'],gender=row['Gender'].lower(),distric=row['District'],community=row['Community'].lower(),percentageoptained=row['Percentage_mark'],Department=dept,status='applied')
-                            if data:
-                                ls=[username,'data updated succesfully']
-                                reportList.append(ls)
-                            else:
-                                ls=[username,'data not updated !error in data']
-                                reportList.append(ls)
-                        except  Exception as e:
-                             ls=[username,'has no department']
-                             reportList.append(ls)
-                   else:
-                        ls=[username,'user not created']
-                        reportList.append(ls)
-                StoreoverallData.objects.create(datafile=data_file)
-                return HttpResponse(str(reportList))
-            except ValueError as e:
-                return HttpResponse(e)
-        else:
-            return render(request,'upload_csv.html')
+                    username = row['App_No']
+                    email = row['Email']
+                    phonenumber = row['Mobile']
+                    password = get_random_string(10)
+                    user, user_created = CustomUserStudent.objects.get_or_create(email=email, defaults={'username': username, 'phone_number': phonenumber})
+                    if user_created:
+                        user.set_password(password)
+                        user.password_created = password  # Store the raw password if necessary
+                        user.save()
+                    
+                    de = row['Department'].lower()
+                    try:
+                        dept = Department.objects.get(name=de)
+                        # Check if PgStudentDetails already exists for the user
+                        pg_student_details, pg_created = PgStudentDetails.objects.update_or_create(
+                            student=user,
+                            defaults={
+                                'name': row['Name'],
+                                'gender': row['Gender'].lower(),
+                                'district': row['District'],
+                                'community': row['Community'].lower(),
+                                'percentage_obtained': row['Percentage_mark'],
+                                'Department': dept,
+                                'status': 'applied'
+                            }
+                        )
+                        if pg_created:
+                            reportList.append([username, 'Data created successfully'])
+                        else:
+                            reportList.append([username, 'Data already exists'])
+                    except Department.DoesNotExist:
+                        reportList.append([username, 'Has no department'])
 
+                StoreoverallData.objects.create(datafile=data_file)
+                response = HttpResponse(content_type='text/csv')
+                response['Content-Disposition'] = 'attachment; filename="report_list.csv"'
+                writer = csv.writer(response)
+                writer.writerows(reportList)  # Use writerows to write all entries in reportList
+                return response
+            except Exception as e:  # Catch broader exceptions if necessary
+                return HttpResponse(f"Error processing the file: {e}")
+        else:
+            return render(request, 'upload_csv.html')
+
+  
 # admin.site.register(CustomUserStaff, CustomUserStaffAdmin)
 # admin.site.register(CustomUserStudent, CustomUserStudentAdmin)
 # admin.site.register(Department)

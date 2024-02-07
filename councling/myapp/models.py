@@ -39,7 +39,8 @@ class CustomUserManager(BaseUserManager):
 
         return self.create_user(email, username, password, **extra_fields)
 
-
+    def __str__(self):
+        return f"CSV File {self.id} - Created at {self.created_at}"
 # custom user model for staff
 class CustomUserStaff(AbstractBaseUser,PermissionsMixin):
     ROLE=[

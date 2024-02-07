@@ -4,12 +4,12 @@ from . import models
 from . decoraters import group_required
 from django.contrib.auth.decorators import login_required
 # select department in controler
-#@group_required(['controler'])
+# @group_required(['controler'])
 def deptcontrol(request):
     data=models.Department.objects.all()
     return render(request,'controler/index.html',{'department':data})
 #controler profile
-#@group_required(['controler'])
+# @group_required(['controler'])
 def controller(request,department,list):
     com=request.GET.get('cot','').lower()
     try:
@@ -40,7 +40,7 @@ def controller(request,department,list):
     }
     return render(request,'controler/listpage.html',context)
 # controler profile for student
-#@group_required(['controler'])
+# @group_required(['controler'])
 def constudent(request,department,list,userid):
     if request.method=='POST':
         try:
@@ -52,7 +52,7 @@ def constudent(request,department,list,userid):
             data.status='department'
             data.remark=request.POST.get('remark', '') 
             if data.community=='bc':
-                if dpt.pg_oc >0:
+                if dpt.pg_oc >1:
                     data.resevation='oc'
                     dpt.pg_oc-=1
                 elif dpt.pg_bc>0:
@@ -61,7 +61,7 @@ def constudent(request,department,list,userid):
                 else:
                     return HttpResponse('no avalable sets for bc community !')
             elif data.community=='bcm':
-                if dpt.pg_oc >0:
+                if dpt.pg_oc >1:
                     data.resevation='oc'
                     dpt.pg_oc-=1
                 elif dpt.pg_bcm>0:
@@ -70,7 +70,7 @@ def constudent(request,department,list,userid):
                 else:
                     return HttpResponse('no avalable sets for bcm community !')
             elif data.community=='mbc':
-                if dpt.pg_oc >0:
+                if dpt.pg_oc >1:
                     data.resevation='oc'
                     dpt.pg_oc-=1
                 elif dpt.pg_mbc>0:
@@ -79,7 +79,7 @@ def constudent(request,department,list,userid):
                 else:
                     return HttpResponse('no avalable sets for mbc community !')
             elif data.community=='sc':
-                if dpt.pg_oc >0:
+                if dpt.pg_oc >1:
                     data.resevation='oc'
                     dpt.pg_oc-=1
                 elif dpt.pg_sc>0:
@@ -88,7 +88,7 @@ def constudent(request,department,list,userid):
                 else:
                     return HttpResponse('no avalable sets for sc community !')
             elif data.community=='sca':
-                if dpt.pg_oc >0:
+                if dpt.pg_oc >1:
                     data.resevation='oc'
                     dpt.pg_oc-=1
                 elif dpt.pg_sca>0:
@@ -97,7 +97,7 @@ def constudent(request,department,list,userid):
                 else:
                     return HttpResponse('no avalable sets for sca community !')
             elif data.community=='st':
-                if dpt.pg_oc >0:
+                if dpt.pg_oc >1:
                     data.resevation='oc'
                     dpt.pg_oc-=1
                 elif dpt.pg_st>0:
@@ -105,6 +105,9 @@ def constudent(request,department,list,userid):
                     dpt.pg_st-=1
                 else:
                     return HttpResponse('no avalable sets for st community !')
+            elif dpt.pg_oc==1 and (data.sports=='yes' or data.pysically_chalanged=='yes'):
+                data.resevation='ph'
+                dpt.pg_oc-=1
             else:
                 return HttpResponse('some thing went worng')
             dpt.save()
@@ -135,7 +138,7 @@ def constudent(request,department,list,userid):
             return Http404("enter the correct url")
     
 # department views
-#@group_required(['department'])
+# @group_required(['department'])
 def department(request,department,list):
     com=request.GET.get('cot','').lower()
     try:
@@ -151,7 +154,10 @@ def department(request,department,list):
         
         valid_communities = ['mbc', 'bc', 'sc', 'sca','st','bcm','oc']
         if com in valid_communities:
-            filtereddata = data.filter(resevation=com) 
+            if com=='oc':
+                filtereddata = data.filter(resevation=(com or 'ph')) 
+            else:
+                filtereddata = data.filter(resevation=com) 
         else:
             filtereddata = data
     except Exception as e:
@@ -163,7 +169,7 @@ def department(request,department,list):
         }
     return render(request,'department/listpage.html',context)
 # department student views 
-#@group_required(['department'])
+# @group_required(['department'])
 def depstudent(request,department,list,userid):
     if request.method=='POST':
         try:
@@ -214,7 +220,7 @@ def depstudent(request,department,list,userid):
             return Http404("enter the correct url")
 
 #principal view
-#@group_required(['principal'])
+# @group_required(['principal'])
 def principal(request,list):
     dep = request.GET.get('dep', '').lower()
     try:
@@ -240,7 +246,7 @@ def principal(request,list):
     }
     return render(request, 'principal/listpage.html', context)
 #principal view student
-#@group_required(['principal'])
+# @group_required(['principal'])
 def pplstudent(request,list, userid):
     try:
         data = models.PgStudentDetails.objects.filter(student__username=userid).filter(details_submited=True)

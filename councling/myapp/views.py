@@ -49,7 +49,7 @@ def otp_auth(request):
                     elif user.role=='controler':
                         return redirect('deptcontrol')
                     elif user.role=='principal':
-                        return redirect('principal')
+                        return redirect('principal',list='admited')
                     elif user.role=='student':
                         return redirect('pgregister')
                     else:
