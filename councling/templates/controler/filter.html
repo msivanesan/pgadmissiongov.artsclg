@@ -1,6 +1,10 @@
 {% include 'pg/components/cota.html' %}
       <hr>
       <ol class="list-group view-filter list-group-numbered striped-view" >
+        <li class="p-2 bg-primary">
+            <a  href="{% url 'deptcontrol' %}" class="fw-bold filter-option ">DASHBORD</a>                         
+        </li>
+        <hr>
         <li class="p-2">
             <a  href="{% url 'depcontroler' department=department.name list='applied' %}" class="fw-bold filter-option">APPLIED LIST</a>          
         </li>
@@ -16,15 +20,12 @@
         <li class="p-2">
             <a  href="{% url 'depcontroler' department=department.name list='rejected' %}" class="fw-bold filter-option ">REJECTED LIST</a>                         
         </li>
-        <hr>
-        <li class="p-2 bg-primary">
-        <a  href="{% url 'deptcontrol' %}" class="fw-bold filter-option ">DASHBORD</a>                         
-        </li>
+        
 
      </ol>
      <br>
      <div class="container text-center">
      <button type="button" class="btn btn-success">Download</button>
-        </div>  
+    </div>  
 
       

@@ -9,8 +9,8 @@ urlpatterns = [
     path('controler/',view.deptcontrol,name='deptcontrol'),
     path('controler/<str:department>/<str:list>/',view.controller,name='depcontroler'),
     path('controler/<str:department>/<str:list>/<str:userid>',view.constudent,name="constudent"),
-    path('department/<str:department>/',view.department,name='department'),
-    path('department/<str:department>/<str:userid>',view.depstudent,name="depstudent"),
-    path('principal/',view.principal,name='principal'),
-    path('principal/<str:userid>',view.pplstudent,name="pplstudent"),
+    path('department/<str:department>/<str:list>/',view.department,name='department'),
+    path('department/<str:department>/<str:list>/<str:userid>',view.depstudent,name="depstudent"),
+    path('principal/<str:list>/',view.principal,name='principal'),
+    path('principal/<str:list>/<str:userid>',view.pplstudent,name="pplstudent"),
 ]

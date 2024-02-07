@@ -22,8 +22,8 @@ def user_login(request):
             request.session['password']=password
             return redirect('otp_auth')
         else:
-           error_message='invalid username or password'
-           return render(request,'login.html',{'error':error_message})
+            error_message='invalid username or password'
+            return render(request,'login.html',{'error':error_message})
     return render(request,'login.html',{'error':error_message})
 # authenticate user with opt
 def otp_auth(request):
@@ -45,7 +45,11 @@ def otp_auth(request):
                     del request.session['valid_date']
                     del request.session['password']
                     if user.role=='department':
-                        return HttpResponse("department")
+                        return redirect('department',department=user.department.name, list='selected')
+                    elif user.role=='controler':
+                        return redirect('deptcontrol')
+                    elif user.role=='principal':
+                        return redirect('principal')
                     elif user.role=='student':
                         return redirect('pgregister')
                     else:
@@ -74,7 +78,7 @@ def pgregister(request):
         data = PgStudentDetails.objects.get(student=request.user)
     except PgStudentDetails.DoesNotExist:
         return HttpResponse("You have no data. Please contact the administrator.")
-    if data.details_submited ==True:
+    if data.details_submited ==True :
         return HttpResponse("you have uploded the data ")
     else:
         if request.method == 'POST':

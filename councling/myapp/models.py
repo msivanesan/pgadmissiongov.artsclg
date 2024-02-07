@@ -175,7 +175,7 @@ class PgStudentDetails(models.Model):
     resevation=models.CharField(max_length=10, null=True,blank=True)
     remark=models.CharField(max_length=150,null=True,blank=True)
     fees=models.BooleanField(default=False)
-
+    rejectedBy=models.CharField(max_length=10,null=True,blank=True)
 
 
     @property

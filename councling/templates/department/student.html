@@ -4,15 +4,19 @@
 {% block content %}
 
 <div class="container-fluid m-0 p-0" style="max-width: 99%;">
+    <div class="row clglogo">
+        <div class="col-md-12 col-xl-12 col-xxl-12">
+        </div>
+    </div>
     {% include 'pg/components/studentprofile.html' %}
     <form action="" method="post" class="d-flex justify-content-between  border-bottom border-5 bg-primary">
         {% csrf_token %}
-        <button type="button" name="action"  value="admit" class="btn btn-success ">Admit</button>
+        <button type="submit" name="action"  value="admit" class="btn btn-success ">Admit</button>
         <div class="input-group ">
             <span class="input-group-text bg-dark text-light" id="remark">Remark</span>
             <input type="text" class="form-control bg-dark-subtle" placeholder="remark"  aria-describedby="remark" >
           </div>
-        <button type="button" name="action" value="reject" class="btn btn-danger ">Reject</button>
+        <button type="submit" name="action" value="reject" class="btn btn-danger ">Reject</button>
     </form>
 </div>
 
