@@ -25,7 +25,10 @@
      </ol>
      <br>
      <div class="container text-center">
-     <button type="button" class="btn btn-success">Download</button>
+    <form action="" method="post">
+        {% csrf_token %}
+     <button type="submit" name="action" value="download" class="btn btn-success">Download</button>
+    </form>
     </div>  
 
       

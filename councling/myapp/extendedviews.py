@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from django.http import HttpResponse,Http404
 from . import models
+import csv
 from . decoraters import group_required
 from django.contrib.auth.decorators import login_required
 # select department in controler
@@ -33,12 +34,23 @@ def controller(request,department,list):
             filtereddata = data
     except Exception as e:
         return HttpResponse(e)
-    
     context={
-        'data':filtereddata,
-        'department':dpt
-    }
-    return render(request,'controler/listpage.html',context)
+            'data':filtereddata,
+            'department':dpt
+        }
+    if request.method=='POST':
+        if request.POST['action']=='download':
+            response = HttpResponse(content_type='text/csv',headers={'Content-Disposition': 'attachment; filename="report.csv"'},)
+            writer = csv.writer(response)
+            writer.writerow([list])
+            writer.writerow(['application id','name','gender','percentage','community'])
+            for item in filtereddata:
+                writer.writerow([item.student.username, item.name, item.gender,item.percentageoptained,item.community]) 
+            return response
+        else:
+            return render(request,'controler/listpage.html',context)
+    else:
+        return render(request,'controler/listpage.html',context)
 # controler profile for student
 # @group_required(['controler'])
 def constudent(request,department,list,userid):
