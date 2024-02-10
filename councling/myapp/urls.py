@@ -1,4 +1,6 @@
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 from . import views
 from . import extendedviews as view
 urlpatterns = [
@@ -14,3 +16,6 @@ urlpatterns = [
     path('principal/<str:list>/',view.principal,name='principal'),
     path('principal/<str:list>/<str:userid>',view.pplstudent,name="pplstudent"),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

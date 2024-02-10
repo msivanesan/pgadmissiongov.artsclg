@@ -12163,4 +12163,82 @@ body {
   position: relative;
   top: 50%;
   transform: translateY(-50%);
+}
+
+.pg-dataform div {
+  display: block;
+  margin-bottom: 10px;
+  justify-content: center;
+}
+.pg-dataform div label {
+  color: brown;
+  margin-left: start;
+  margin-right: auto;
+  text-transform: uppercase;
+}
+
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  margin: 0;
+}
+
+.login-container {
+  text-align: center;
+  background-color: white;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 300px;
+}
+
+.login-container h2, .login-container .h2 {
+  text-align: center;
+  margin: 0 0 20px 0;
+}
+
+.input-group {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 10px;
+  top: calc(50% - 8px);
+  cursor: pointer;
+}
+
+.splash-text {
+  font-size: 48px;
+  font-weight: bold;
+  opacity: 0;
+  color: red;
+  transform: scale(0);
+  animation: splashEffect 1s infinite;
+}
+
+@keyframes splashEffect {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(0.8);
+  }
 }/*# sourceMappingURL=custom.css.map */

@@ -23,6 +23,7 @@ class CustomUserStudentCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = CustomUserStudent
         fields = ('username','email','phone_number',)
+        
 
 class CustomUserStudentChangeForm(UserChangeForm):
     class Meta(UserChangeForm.Meta):
@@ -49,10 +50,14 @@ class customUserLoginForm(forms.Form):
 class PgDataForm(forms.ModelForm):
     class Meta:
         model = PgStudentDetails
-        exclude = ('student', 'status', 'details_submited', 'resevation', 'fees','rejectedBy','remark','resevation','percentageoptained','Department','distric','community')
+        exclude = ('student', 'status', 'details_submited', 'resevation', 'fees','rejectedBy','remark','distric')
+        widgets = {
+            'dateofbirth': forms.DateInput(attrs={'type': 'date'}),
+        }
 
     def __init__(self, *args, **kwargs):
         super(PgDataForm, self).__init__(*args, **kwargs)
+        self.fields['name'].disabled = True
         self.fields['fathername'].required = True
         self.fields['gender'].required = True
         self.fields['dateofbirth'].required = True
@@ -62,6 +67,9 @@ class PgDataForm(forms.ModelForm):
         self.fields['sports'].required = True
         self.fields['aadhar'].required = True
         self.fields['address'].required = True
+        self.fields['Department'].disabled = True
+        self.fields['community'].disabled = True
+        self.fields['percentageoptained'].disabled = True
         self.fields['instute_name'].required = True
         self.fields['degree'].required = True
         self.fields['mode_of_study'].required = True

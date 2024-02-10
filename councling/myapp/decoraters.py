@@ -14,7 +14,7 @@ def group_required(group_names):
                 return HttpResponseForbidden("You must be logged in.")
             user_groups = set(request.user.groups.values_list('name', flat=True))
             if not set(group_names).intersection(user_groups):
-                return HttpResponseForbidden("You do not have permission to view this page.")
+                return HttpResponseForbidden("<h1>You do not have permission to view this page.</h1>")
             return view_func(request, *args, **kwargs)
         return _wrapped_view
     return decorator

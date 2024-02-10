@@ -4,10 +4,7 @@
 {% block content %}
 
 <div class="container-fluid m-0 p-0" style="max-width: 99%;">
-    <div class="row clglogo">
-        <div class="col-md-12 col-xl-12 col-xxl-12">
-        </div>
-    </div>
+    {% include 'logoutbar.html' %} 
     <div class="row ">
         <div class="col-md-2 col-xl-2 col-xxl-2 " style="overflow-y: auto; height: 87vh;">
             {% include 'pg/components/seatavalabe.html' %}
@@ -20,8 +17,8 @@
                 <div class="input-group ">
                     <span class="input-group-text bg-dark text-light" id="remark">Remark</span>
                     <input type="text" class="form-control bg-dark-subtle" name="remark" placeholder="remark"  aria-describedby="remark" >
-                  </div>
-                <button type="submit" name="action" value="reject" class="btn btn-danger ">Reject</button>
+                    </div>
+                <button type="submit" name="action" value="reject" class="btn btn-danger m-0 p-0 ">Reject</button>
             </form>
         </div>
 

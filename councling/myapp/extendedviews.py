@@ -1,30 +1,30 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from django.http import HttpResponse,Http404
 from . import models
+from django.views.decorators.cache import never_cache
 import csv
 from . decoraters import group_required
-from django.contrib.auth.decorators import login_required
 # select department in controler
-# @group_required(['controler'])
+@group_required(['controler'])
 def deptcontrol(request):
     data=models.Department.objects.all()
     return render(request,'controler/index.html',{'department':data})
 #controler profile
-# @group_required(['controler'])
+@group_required(['controler'])
 def controller(request,department,list):
     com=request.GET.get('cot','').lower()
     try:
         dpt=models.Department.objects.get(name=department)
         if list=='truned up': 
-            data=models.PgStudentDetails.objects.filter(status='applied').filter(Department__name=department).order_by('-percentageoptained')
+            data=models.PgStudentDetails.objects.filter(status='controler').filter(Department__name=department).filter(details_submited=True).order_by('-percentageoptained')
         elif list=='applied':
             data=models.PgStudentDetails.objects.filter(Department__name=department).order_by('-percentageoptained')
         elif list=='not turned up':
-            data=models.PgStudentDetails.objects.filter(Department__name=department).order_by('-percentageoptained')
+            data=models.PgStudentDetails.objects.filter(Department__name=department).filter(status='applied').order_by('-percentageoptained')
         elif list=='selected':
-            data=models.PgStudentDetails.objects.filter(Department__name=department).filter(status='department').order_by('-percentageoptained')
+            data=models.PgStudentDetails.objects.filter(Department__name=department).filter(details_submited=True).filter(status='department').order_by('-percentageoptained')
         elif list=='rejected':
-            data=models.PgStudentDetails.objects.filter(Department__name=department).filter(status='rejected').order_by('-percentageoptained')
+            data=models.PgStudentDetails.objects.filter(Department__name=department).filter(status='rejected').filter(details_submited=True).order_by('-percentageoptained')
         else:
             return HttpResponse("enter the correct url")
         valid_communities = ['mbc', 'bc', 'sc', 'sca','st','bcm']
@@ -43,16 +43,16 @@ def controller(request,department,list):
             response = HttpResponse(content_type='text/csv',headers={'Content-Disposition': 'attachment; filename="report.csv"'},)
             writer = csv.writer(response)
             writer.writerow([list])
-            writer.writerow(['application id','name','gender','percentage','community'])
+            writer.writerow(['application id','name','gender','percentage','community','department'])
             for item in filtereddata:
-                writer.writerow([item.student.username, item.name, item.gender,item.percentageoptained,item.community]) 
+                writer.writerow([item.student.username, item.name, item.gender,item.percentageoptained,item.community,item.Department.name]) 
             return response
         else:
             return render(request,'controler/listpage.html',context)
     else:
         return render(request,'controler/listpage.html',context)
 # controler profile for student
-# @group_required(['controler'])
+@group_required(['controler'])
 def constudent(request,department,list,userid):
     if request.method=='POST':
         try:
@@ -133,7 +133,7 @@ def constudent(request,department,list,userid):
     else:
         try:
             dpt=models.Department.objects.get(name=department)
-            data = models.PgStudentDetails.objects.filter(student__username=userid)
+            data = models.PgStudentDetails.objects.get(student__username=userid)
             context = {'data': data,'department':dpt }
         except models.PgStudentDetails.DoesNotExist:
             raise Http404("Student details not found.")
@@ -150,17 +150,17 @@ def constudent(request,department,list,userid):
             return Http404("enter the correct url")
     
 # department views
-# @group_required(['department'])
+@group_required(['department'])
 def department(request,department,list):
     com=request.GET.get('cot','').lower()
     try:
         dpt=models.Department.objects.get(name=department)
         if list=='selected': 
-            data=models.PgStudentDetails.objects.filter(status='department').filter(Department__name=department).order_by('-percentageoptained')
+            data=models.PgStudentDetails.objects.filter(status='department').filter(Department__name=department).filter(details_submited=True).order_by('-percentageoptained')
         elif list=='admited':
-            data=models.PgStudentDetails.objects.filter(status='admited').filter(Department__name=department).order_by('-percentageoptained')
+            data=models.PgStudentDetails.objects.filter(status='admited').filter(Department__name=department).filter(details_submited=True).order_by('-percentageoptained')
         elif list=='rejected':
-            data=models.PgStudentDetails.objects.filter(status='rejected').filter(Department__name=department).order_by('-percentageoptained')
+            data=models.PgStudentDetails.objects.filter(status='rejected').filter(Department__name=department).filter(details_submited=True).order_by('-percentageoptained')
         else:
             return HttpResponse("enter the correct url")
         
@@ -179,14 +179,26 @@ def department(request,department,list):
             'data':filtereddata,
             'department':dpt
         }
-    return render(request,'department/listpage.html',context)
+    if request.method=='POST':
+        if request.POST['action']=='download':
+            response = HttpResponse(content_type='text/csv',headers={'Content-Disposition': 'attachment; filename="report.csv"'},)
+            writer = csv.writer(response)
+            writer.writerow([list])
+            writer.writerow(['application id','name','gender','percentage','community','department'])
+            for item in filtereddata:
+                writer.writerow([item.student.username, item.name, item.gender,item.percentageoptained,item.community,item.Department.name]) 
+            return response
+        else:
+            return render(request,'department/listpage.html',context)
+    else:
+        return render(request,'department/listpage.html',context)
 # department student views 
 # @group_required(['department'])
 def depstudent(request,department,list,userid):
     if request.method=='POST':
         try:
             dpt=models.Department.objects.get(name=department)
-            data = models.PgStudentDetails.objects.get(student__username=userid)
+            data = models.PgStudentDetails.objects.filter(details_submited=True).get(student__username=userid)
         except models.PgStudentDetails.DoesNotExist:
             raise Http404("Student details not found.")
         if request.POST['action']== 'admit':
@@ -217,7 +229,7 @@ def depstudent(request,department,list,userid):
     else:
         try:
             dpt=models.Department.objects.get(name=department)
-            data = models.PgStudentDetails.objects.filter(student__username=userid)
+            data = models.PgStudentDetails.objects.filter(status='department').filter(Department__name=department).filter(details_submited=True).get(student__username=userid)
             context = {'data': data,'department':dpt }
         except models.PgStudentDetails.DoesNotExist:
             raise Http404("Student details not found.")
@@ -232,7 +244,7 @@ def depstudent(request,department,list,userid):
             return Http404("enter the correct url")
 
 #principal view
-# @group_required(['principal'])
+@group_required(['principal'])
 def principal(request,list):
     dep = request.GET.get('dep', '').lower()
     try:
@@ -256,12 +268,25 @@ def principal(request,list):
         'data': filtered_data,
         'department': dpt
     }
-    return render(request, 'principal/listpage.html', context)
+    if request.method=='POST':
+        if request.POST['action']=='download':
+            response = HttpResponse(content_type='text/csv',headers={'Content-Disposition': 'attachment; filename="report.csv"'},)
+            writer = csv.writer(response)
+            writer.writerow([list])
+            writer.writerow(['application id','name','gender','percentage','community','department'])
+            for item in filtered_data:
+                writer.writerow([item.student.username, item.name, item.gender,item.percentageoptained,item.community,item.Department.name]) 
+            return response
+        else:
+            return render(request, 'principal/listpage.html', context)
+    else:
+        return render(request, 'principal/listpage.html', context)
+    
 #principal view student
-# @group_required(['principal'])
+@group_required(['principal'])
 def pplstudent(request,list, userid):
     try:
-        data = models.PgStudentDetails.objects.filter(student__username=userid).filter(details_submited=True)
+        data = models.PgStudentDetails.objects.filter(details_submited=True).get(student__username=userid)
         context = {'data': data}
         return render(request, 'principal/student.html', context)
     except models.PgStudentDetails.DoesNotExist:

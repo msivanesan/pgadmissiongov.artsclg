@@ -3,12 +3,16 @@
 {% block title %}data register{% endblock %}
 {% load crispy_forms_tags %}
 {%block content%}
-{% if user.is_authenticated %}
-    <a href="{% url 'logout' %}">Logout</a>
-{% endif %}
-<form action="" method="post" enctype="multipart/form-data" class="border border-3">
+<div class="container-fluid m-0 p-0" style="max-width: 99%;">
+    {% include 'logoutbar.html' %} 
+<form action="" method="post" enctype="multipart/form-data" class=" pg-dataform">
 {% csrf_token %}
- {{forms}}
- <button type="submit">submit</button>
+{{forms}}
+<div>
+<button type="submit" class="btn btn-success" style="
+text-align: center;">submit</button>
+</div>
 </form>    
+</div>
+
 {%endblock%}

@@ -1,18 +1,21 @@
 {% include 'pg/components/cota.html' %}
       <hr>
       <ol class="list-group view-filter list-group-numbered striped-view" >
-        <li class="p-2">
+      <li class="p-2">
             <a  href="{% url 'department' department=department.name list='selected' %}" class="fw-bold filter-option">SELECTED LIST</a>          
-        </li>
-        <li class="p-2">
-              <a  href="{% url 'department' department=department.name list='admited' %}" class="fw-bold filter-option ">ADMITED LIST</a>                         
-        </li>
-        <li class="p-2">
+      </li>
+      <li class="p-2">
+            <a  href="{% url 'department' department=department.name list='admited' %}" class="fw-bold filter-option ">ADMITED LIST</a>                         
+      </li>
+      <li class="p-2">
             <a  href="{% url 'department' department=department.name list='rejected' %}" class="fw-bold filter-option ">REJECTED LIST</a>                         
       </li>
-     </ol>
-     <br>
-     <div class="container text-center">
-     <button type="button" class="btn btn-success">Download</button>
-        </div>  
+      </ol>
+      <br>
+      <div class="container text-center">
+      <form action="" method="post">
+            {% csrf_token %}
+            button type="submit" name="action" value="download" class="btn btn-success">Download</button>
+      </form>
+      </div>  
       

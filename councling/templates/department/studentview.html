@@ -3,9 +3,6 @@
 
 {% block content %}
 <div class="container-fluid m-0 p-0" style="max-width: 99%;">
-    <div class="row clglogo">
-        <div class="col-md-12 col-xl-12 col-xxl-12">
-        </div>
-    </div>
+    {% include 'logoutbar.html' %} 
     {% include 'pg/components/studentprofile.html' %}
 {% endblock %}

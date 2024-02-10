@@ -22,6 +22,40 @@
         top: 50%;
         transform: translateY(-50%);
     }
+    .login{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  margin: 0;
+}
+.login-container {
+text-align: center;
+  background-color: white;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 300px;
+}
+.login-container h2 {
+  text-align: center;
+  margin: 0 0 20px 0;
+color: #000;
+}
+.input-group {
+  position: relative;
+  margin-bottom: 20px;
+}
+.input-group label{
+    color: #000;
+}
+input[type="file"]{
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
 </style>
 {% endblock %}
 
@@ -30,13 +64,19 @@
     <img src="https://loading.io/spinners/double-ring/lg.double-ring-spinner.gif" alt="Loading...">
 
 </div>
-
+<div class="login">
 <form action="" method="post" enctype="multipart/form-data" id="uploadForm">
     {% csrf_token %}
+    <div class="login-container">
+        <h2>upload</h2>
+        <div class="input-group">
+            <label for="import_file"><b>CSV File</b></label>
     <input type="file" name="datafile" id="import_file" required>
+</div>
     <button type="submit">Upload</button>
+</div>
 </form>
-
+</div>
 <script>
 document.getElementById('uploadForm').onsubmit = function(e) {
     e.preventDefault(); // Prevent the normal form submission

@@ -1,11 +1,11 @@
-<div class="row clglogo">
-    <div class="col-md-10 col-xl-10 col-xxl-10">
-
-    </div>
-    <div class="col-md-2 col-xl-2 col-xxl-2">
+<div class="row clglogo border-bottom border-4">
+    <div class="col-sm-12  col-md-12 col-xl-12 col-xxl-12">
+        <marquee behavior="" direction="left" style="margin-top: 15px; color: black; width: 90%;"><b>kalaignar karunanidhi government arts college</b></marquee>
+        
         {% if user.is_authenticated %}
-    <a href="{% url 'logout' %}">Logout</a>
+        <a href="{% url 'logout' %}" class="btn btn-danger" style="margin-top: 5px; right: 0;">Logout</a>
         {% endif %}
-    </div>
+        
+    </div> 
     </div>
     

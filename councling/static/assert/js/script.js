@@ -37,3 +37,11 @@ if (document.readyState === "loading") {
     // DOMContentLoaded has already fired
     initialize();
 }
+
+
+
+function togglePasswordVisibility() {
+    var passwordInput = document.getElementById('password');
+    var type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+    passwordInput.setAttribute('type', type);
+}

@@ -132,14 +132,15 @@ STATICFILES_DIRS = [
 ]
 
 
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'myapp.CustomUserStaff'
 
-
+#for cripsy themes
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
-
 CRISPY_TEMPLATE_PACK = "bootstrap4"
+
+# for logout after user close the browser
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True

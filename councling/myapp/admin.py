@@ -75,7 +75,7 @@ class PgStudentDetailsadmin(admin.ModelAdmin):
     
 
     def upload_data(self, request):
-        reportList = [['Application ID', 'Status']]  # Adjust the header for CSV output
+        reportList = [['Application ID','depatment','Status']]  # Adjust the header for CSV output
         if request.method == 'POST' and 'datafile' in request.FILES:
             try:
                 data_file = request.FILES['datafile']
@@ -109,11 +109,11 @@ class PgStudentDetailsadmin(admin.ModelAdmin):
                             }
                         )
                         if pg_created:
-                            reportList.append([username, 'Data created successfully'])
+                            reportList.append([username,dept, 'Data created successfully'])
                         else:
-                            reportList.append([username, 'Data already exists'])
+                            reportList.append([username, dept,'Data already exists'])
                     except Department.DoesNotExist:
-                        reportList.append([username, 'Has no department'])
+                        reportList.append([username, de,'Has no department'])
 
                 StoreoverallData.objects.create(datafile=data_file)
                 response = HttpResponse(content_type='text/csv')

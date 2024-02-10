@@ -2,14 +2,21 @@
 
 {% block title %}verification{% endblock %}
 {%block content%}
-{% if error%}
-<p>{{error}}</p>
-{%endif%}
-
+<div style="display: flex; justify-content: center;">
+    {% if error%}
+    <p class="splash-text"><b>{{error}}</b></p>
+    {%endif%}
+    </div>
+<div class="login">
 <form method="post">
     {% csrf_token %}
-    <input type="text" name="opt" placeholder="otp" required>
-    <button type="submit">Confirm</button>
+    <div class="login-container">
+        <h2>OTP Authentication</h2>
+        <div class="input-group">
+            <input type="text" name="otp" placeholder="OTP" required>
+        </div> 
+        <button type="submit" style="width: 100%; padding: 10px; border: none; background-color: #007bff; color: white; border-radius: 5px;">Confim</button>
 </form>
+</div>
 {%endblock%}
 
