@@ -159,6 +159,8 @@ def department(request,department,list):
             data=models.PgStudentDetails.objects.filter(status='department').filter(Department__name=department).filter(details_submited=True).order_by('-percentageoptained')
         elif list=='admited':
             data=models.PgStudentDetails.objects.filter(status='admited').filter(Department__name=department).filter(details_submited=True).order_by('-percentageoptained')
+        elif list=='applied':
+            data=models.PgStudentDetails.objects.filter(Department__name=department).order_by('-percentageoptained')
         elif list=='rejected':
             data=models.PgStudentDetails.objects.filter(status='rejected').filter(Department__name=department).filter(details_submited=True).order_by('-percentageoptained')
         else:
@@ -198,7 +200,7 @@ def depstudent(request,department,list,userid):
     if request.method=='POST':
         try:
             dpt=models.Department.objects.get(name=department)
-            data = models.PgStudentDetails.objects.filter(details_submited=True).get(student__username=userid)
+            data = models.PgStudentDetails.objects.get(student__username=userid)
         except models.PgStudentDetails.DoesNotExist:
             raise Http404("Student details not found.")
         if request.POST['action']== 'admit':
@@ -229,14 +231,14 @@ def depstudent(request,department,list,userid):
     else:
         try:
             dpt=models.Department.objects.get(name=department)
-            data = models.PgStudentDetails.objects.filter(status='department').filter(Department__name=department).filter(details_submited=True).get(student__username=userid)
+            data = models.PgStudentDetails.objects.get(student__username=userid)
             context = {'data': data,'department':dpt }
         except models.PgStudentDetails.DoesNotExist:
-            raise Http404("Student details not found.")
+            raise HttpResponse("Student details not found.")
         except Exception as e:
             return HttpResponse(e)
         
-        if list=='selected':    
+        if list=='selected' or list=='applied':    
             return render(request, 'department/student.html', context)
         elif list=='rejected' or list == 'admited':
             return render(request, 'department/studentview.html', context)

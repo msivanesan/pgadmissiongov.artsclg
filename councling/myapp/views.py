@@ -28,7 +28,7 @@ def user_login(request):
         if request.user.role=='department':
             return redirect('department',department=user.department.name, list='selected')
         elif request.user.role=='controler':
-            return redirect('deptcontrol')
+            return redirect('depcontroler',department=request.user.department.name,list='truned up')
         elif request.user.role=='principal':
             return redirect('principal',list='admited')
         elif request.user.role=='student':
@@ -72,7 +72,7 @@ def otp_auth(request):
                     if user.role=='department':
                         return redirect('department',department=user.department.name, list='selected')
                     elif user.role=='controler':
-                        return redirect('deptcontrol')
+                        return redirect('depcontroler',department=user.department.name,list='truned up')
                     elif user.role=='principal':
                         return redirect('principal',list='admited')
                     elif user.role=='student':

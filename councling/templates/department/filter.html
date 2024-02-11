@@ -2,6 +2,9 @@
       <hr>
       <ol class="list-group view-filter list-group-numbered striped-view" >
       <li class="p-2">
+            <a  href="{% url 'department' department=department.name list='applied' %}" class="fw-bold filter-option">applied LIST</a>          
+      </li>   
+      <li class="p-2">
             <a  href="{% url 'department' department=department.name list='selected' %}" class="fw-bold filter-option">SELECTED LIST</a>          
       </li>
       <li class="p-2">
@@ -15,7 +18,7 @@
       <div class="container text-center">
       <form action="" method="post">
             {% csrf_token %}
-            button type="submit" name="action" value="download" class="btn btn-success">Download</button>
+            <button type="submit" name="action" value="download" class="btn btn-success">Download</button>
       </form>
       </div>  
       

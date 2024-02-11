@@ -55,7 +55,7 @@ class CustomUserStaff(AbstractBaseUser,PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=True)
     role=models.CharField(max_length=10,null=True,choices=ROLE)
-    department=models.OneToOneField(Department,on_delete=models.CASCADE,null=True,blank=True)
+    department=models.ForeignKey(Department,on_delete=models.CASCADE,null=True,blank=True)
     groups = models.ManyToManyField(
         Group,
         related_name="customuserstaff_groups",
