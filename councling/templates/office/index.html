@@ -1,0 +1,15 @@
+{% extends "main.html"%}
+{% block title %}department{% endblock %}
+
+
+
+{% block content %}
+<div class="container-fluid m-0 p-0">
+    <div class="row float-window">
+        {%for dept in department%}
+        <div class="deptopt p-0 border-3"><a href="{% url 'office' department=dept.name  %}">{{dept}}</a></div>
+        {%endfor%}  
+    </div>
+    </div>
+</div>
+{% endblock %}

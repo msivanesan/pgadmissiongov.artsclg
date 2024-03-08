@@ -5,6 +5,7 @@
 {%block content%}
 <div class="container-fluid m-0 p-0" style="max-width: 99%;">
     {% include 'logoutbar.html' %} 
+    <div class="form-container">
 <form action="" method="post" enctype="multipart/form-data" class=" pg-dataform">
 {% csrf_token %}
 {{forms}}
@@ -13,6 +14,7 @@
 text-align: center;">submit</button>
 </div>
 </form>    
+</div>
 </div>
 
 {%endblock%}

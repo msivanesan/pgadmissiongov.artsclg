@@ -1,0 +1,22 @@
+{% extends "main.html"%}
+
+{% block title %}data register{% endblock %}
+{% load crispy_forms_tags %}
+{%block content%}
+<div class="container-fluid m-0 p-0" style="max-width: 99%;">
+    {% include 'logoutbar.html' %} 
+    <div class="form-container">
+<form action="" method="post" enctype="multipart/form-data" class=" pg-dataform">
+{% csrf_token %}
+{{forms}}
+<div>
+    <hr>
+<button type="submit" class="btn btn-success" style="
+text-align: center;">submit</button>
+<button type="button" onclick="history.back();" class="btn btn-danger " style=" margin-left: 30%;">Go Back</button>
+</div>
+</form>   
+</div> 
+</div>
+
+{%endblock%}

@@ -1,0 +1,26 @@
+<!-- login.html -->
+{% extends "main.html"%}
+{% block title %}login{% endblock %}
+
+{%block content%}
+
+<div style="display: flex; justify-content: center;">
+{%if error%}
+<p class="splash-text"><b>{{error}}</b></p>
+{%endif%}
+</div>
+<div class="login">
+<form method="post">
+    {% csrf_token %}
+    <div class="login-container">
+        <h2>Resend password</h2>
+        <div class="input-group">
+            <input type="text" name="username" placeholder="Username" required style="margin-bottom: 10px;">
+        </div>
+        </div>
+        <button type="submit" style="width: 100%; padding: 10px; border: none; background-color: #007bff; color: white; border-radius: 5px;">resend</button>
+    </div>
+    
+</form>
+</div>
+{%endblock%}

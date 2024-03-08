@@ -4,24 +4,27 @@
                 <a  href="?dep=all" class="fw-bold filter-option">ALL</a>          
             </li>   
             {% for dept in department%}
-          <li class="border-bottom" >
-              <a  href="?dep={{dept.name}} " class="fw-bold filter-option">{{dept}}</a>          
-          </li>   
-          {%endfor%}                  
-      </ol>
-      <hr>
-      <ol class="list-group view-filter list-group-numbered striped-view" >
-        <li class="p-2">
-              <a  href="{% url 'principal'  list='admited' %}" class="fw-bold filter-option ">ADMITED LIST</a>                         
-        </li>
-        <li class="p-2">
-            <a  href="{% url 'principal'  list='rejected' %}" class="fw-bold filter-option ">REJECTED LIST</a>                         
-    </li>
+        <li class="border-bottom" >
+            <a  href="?dep={{dept.name}} " class="fw-bold filter-option">{{dept}}</a>          
+        </li>   
+            {%endfor%}                  
     </ol>
     <br>
+    <ol class="list-group view-filter list-group-numbered striped-view" >
+        <li class="p-2">
+            <a  href="{% url 'principal' list='applied' %}" class="fw-bold filter-option">APPLIED LIST</a>          
+        </li>
+        <li class="p-2">
+            <a  href="{% url 'principal' list='admited' %}" class="fw-bold filter-option">ADMITED</a>          
+        </li>
+        <li class="p-2">
+            <a  href="{% url 'principal' list='rejected' %}" class="fw-bold filter-option">REJECTED</a>          
+        </li>
+    </ol> 
+<br>
     <div class="container text-center">
         <form action="" method="post">
             {% csrf_token %}
-        <button type="submit" name="action" value="download" class="btn btn-success">Download</button>
-        </form>
+        <button type="submit" name="action" value="download" class="btn btn-success" style="margin-bottom: 10px;">Download</button>
+        <button type="submit" name="action" value="approve" class="btn btn-success" style="margin-bottom: 10px;">Approve</button>
     </div>  

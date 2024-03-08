@@ -1,14 +1,26 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from django.http import HttpResponse,Http404
 from . import models
+from . import forms
 from django.views.decorators.cache import never_cache
 import csv
 from . decoraters import group_required
 # select department in controler
 @group_required(['controler'])
-def deptcontrol(request):
-    data=models.Department.objects.all()
-    return render(request,'controler/index.html',{'department':data})
+def setchange(request,department):
+    try:
+        data = models.Department.objects.get(name=department)
+    except models.Department.DoesNotExist:
+        return HttpResponse("You have no data. Please contact the administrator.")
+    if request.method == 'POST':
+        form = forms.pgsetform(request.POST,  instance=data)
+        if form.is_valid():
+            form.save()
+            return redirect('depcontroler',department=department, list='selected')
+    else:
+        form = forms.pgsetform(instance=data)
+    return render(request, 'controler/seatcontrol.html', {'forms': form})
+    
 #controler profile
 @group_required(['controler'])
 def controller(request,department,list):
@@ -36,7 +48,8 @@ def controller(request,department,list):
         return HttpResponse(e)
     context={
             'data':filtereddata,
-            'department':dpt
+            'department':dpt,
+            'count':filtereddata.count()
         }
     if request.method=='POST':
         if request.POST['action']=='download':
@@ -143,7 +156,7 @@ def constudent(request,department,list,userid):
         if list=='truned up':    
             return render(request, 'controler/student.html', context)
         elif list=='applied' or list == 'not turned up':
-            return render(request, 'controler/student.html', context)
+            return render(request, 'controler/studentview_not_turnedup.html', context)
         elif list=='selected' or list == 'rejected':    
             return render(request, 'controler/studentview.html', context)
         else:
@@ -179,7 +192,8 @@ def department(request,department,list):
     
     context={
             'data':filtereddata,
-            'department':dpt
+            'department':dpt,
+            'count':filtereddata.count()
         }
     if request.method=='POST':
         if request.POST['action']=='download':
@@ -238,8 +252,10 @@ def depstudent(request,department,list,userid):
         except Exception as e:
             return HttpResponse(e)
         
-        if list=='selected' or list=='applied':    
+        if list=='selected':    
             return render(request, 'department/student.html', context)
+        elif list=='applied':
+            return render(request, 'controler/studentview_not_turnedup.html', context)
         elif list=='rejected' or list == 'admited':
             return render(request, 'department/studentview.html', context)
         else:
@@ -248,27 +264,30 @@ def depstudent(request,department,list,userid):
 #principal view
 @group_required(['principal'])
 def principal(request,list):
-    dep = request.GET.get('dep', '').lower()
+    dep = request.GET.get('dep','').lower()
     try:
         dpt = models.Department.objects.all()
         if list == 'admited': 
             data = models.PgStudentDetails.objects.filter(status='admited')
         elif list == 'rejected':
             data = models.PgStudentDetails.objects.filter(status='rejected')
+        elif list=='applied':
+            data=models.PgStudentDetails.objects.all()
         else:
             return HttpResponse("Enter the correct URL")
         
         if dep == 'all' or dep == '':
-            filtered_data = data.order_by('student__username')
+            filtered_data = data.order_by('-community')
         else:
-            filtered_data = data.filter(Department__name=dep).order_by('student__username')
+            filtered_data = data.filter(Department__name=dep).order_by('-community')
         
     except Exception as e:
         return HttpResponse(e)
     
     context = {
         'data': filtered_data,
-        'department': dpt
+        'department': dpt,
+        'count':filtered_data.count()
     }
     if request.method=='POST':
         if request.POST['action']=='download':
@@ -279,22 +298,51 @@ def principal(request,list):
             for item in filtered_data:
                 writer.writerow([item.student.username, item.name, item.gender,item.percentageoptained,item.community,item.Department.name]) 
             return response
-        else:
-            return render(request, 'principal/listpage.html', context)
-    else:
-        return render(request, 'principal/listpage.html', context)
-    
+        elif request.POST['action']=='approve'and list=='admited':
+            filtered_data.update(aproved=True)
+        elif request.POST['action']=='approve'and list!='admited':
+            HttpResponse(" wrong reqest")
+    return render(request, 'principal/listpage.html', context)
 #principal view student
 @group_required(['principal'])
 def pplstudent(request,list, userid):
     try:
         data = models.PgStudentDetails.objects.filter(details_submited=True).get(student__username=userid)
-        context = {'data': data}
-        return render(request, 'principal/student.html', context)
     except models.PgStudentDetails.DoesNotExist:
         raise Http404("Student details not found.")
     except Exception as e:
         # Return a generic error message or redirect to an error page
         return HttpResponse(e)
+    context = {'data': data}
+    if list=='applied':
+        return render(request, 'controler/studentview_not_turnedup.html', context)
+    else:
+        return render(request, 'principal/student.html', context)
 
 
+# office view
+    
+# def deptselect(request):
+#     dpt=models.Department.objects.all()
+#     return render(request,'office/index.html',{'department':dpt})
+
+def office(request):
+    dep = request.GET.get('dep', '').lower()
+    try:
+        dpt = models.Department.objects.all()
+        data=models.PgStudentDetails.objects.filter(status='admited').filter(aproved=True)
+    except Exception as e:
+        return HttpResponse(e)
+    if dep == 'all' or dep == '':
+        filtered_data = data.order_by('-community')
+    else:
+        filtered_data = data.filter(Department__name=dep).order_by('-community')
+    context = {
+        'data': filtered_data,
+        'department': dpt,
+        'count':filtered_data.count()
+    }
+    return render(request, 'office/listpage.html', context)
+
+def stdoffice(reqest,department,usedid):
+    return HttpResponse(department)

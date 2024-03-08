@@ -2,12 +2,13 @@ from django.contrib import admin
 from django.urls import path
 from django.utils.crypto import get_random_string
 import csv
-from django.shortcuts import render, redirect,get_object_or_404
+from django.shortcuts import render, redirect
 from django.urls.resolvers import URLPattern
 from . models import CustomUserStaff,CustomUserStudent,Department,PgStudentDetails,StoreoverallData
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import Group
-
+from django.core.mail import send_mail
+from django.conf import settings
 from . forms import CustomUserStaffCreationForm, CustomUserStaffChangeForm
 from django.http import HttpResponse
 
@@ -61,10 +62,29 @@ class CustomUserStudentAdmin(UserAdmin):
     )
 
 
+def export_as_csv(modeladmin, request, queryset):
+    meta = modeladmin.model._meta
+    field_names = [field.name for field in meta.fields]
+    
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = f'attachment; filename={meta}.csv'
+    writer = csv.writer(response)
+    
+    writer.writerow(field_names)
+    for obj in queryset:
+        row = writer.writerow([getattr(obj, field) for field in field_names])
+    
+    return response
+
+export_as_csv.short_description = "Export Selected to CSV"
+
 #dstudent detail register
 class PgStudentDetailsadmin(admin.ModelAdmin):
     list_display = ['username','name']
     search_fields=['student__username','name']
+    list_filter=['Department','status']
+    actions = [export_as_csv]
+
 
     def get_urls(self) :
         urls=super().get_urls()
@@ -110,8 +130,23 @@ class PgStudentDetailsadmin(admin.ModelAdmin):
                         )
                         if pg_created:
                             reportList.append([username,dept, 'Data created successfully'])
+                                # send the user their user name and data\
+                            send_mail(
+                                    'USER NAME AND PASSWORD FOR YOUR ACCOUNT',
+                                    'USERNAME : '+username +'PASSWORD :' + password,
+                                    'settings.EMAIL_HOST_USER',
+                                    ['msivanesan2003@gmail.com'],
+                                    fail_silently=False,
+                                )
                         else:
                             reportList.append([username, dept,'Data already exists'])
+                            send_mail(
+                                    'USER NAME AND PASSWORD FOR YOUR ACCOUNT',
+                                    'USERNAME : '+username +'  PASSWORD : ' + password,
+                                    'settings.EMAIL_HOST_USER',
+                                    ['msivanesan2003@gmail.com'],
+                                    fail_silently=False,
+                                )
                     except Department.DoesNotExist:
                         reportList.append([username, de,'Has no department'])
 
@@ -126,7 +161,7 @@ class PgStudentDetailsadmin(admin.ModelAdmin):
         else:
             return render(request, 'upload_csv.html')
 
-  
+
 # admin.site.register(CustomUserStaff, CustomUserStaffAdmin)
 # admin.site.register(CustomUserStudent, CustomUserStudentAdmin)
 # admin.site.register(Department)

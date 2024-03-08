@@ -12005,9 +12005,6 @@ body {
 }
 
 /* Style for odd items */
-.striped-view li {
-  /* Style for even items */
-}
 .striped-view li:nth-child(odd) {
   background-color: #BCD4E6;
   text-transform: uppercase;
@@ -12129,22 +12126,6 @@ body {
 }
 
 /* styles.css */
-.form-control::-moz-placeholder {
-  color: rgb(34, 13, 228);
-}
-.form-control::placeholder {
-  color: rgb(34, 13, 228);
-}
-
-/* For cross-browser compatibility */
-.form-control:-ms-input-placeholder {
-  color: rgb(34, 13, 228);
-}
-
-.form-control::-ms-input-placeholder {
-  color: rgb(34, 13, 228);
-}
-
 .loading {
   display: block;
   position: fixed;
@@ -12201,7 +12182,6 @@ body {
 
 .input-group {
   position: relative;
-  margin-bottom: 20px;
 }
 
 input[type=text], input[type=password] {
@@ -12241,4 +12221,57 @@ input[type=text], input[type=password] {
     opacity: 1;
     transform: scale(0.8);
   }
+}
+.form-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.form-container form.pg-dataform {
+  background-color: #f0f8ff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+.form-container form.pg-dataform label {
+  color: #495057;
+  font-weight: bold;
+}
+.form-container form.pg-dataform input[type=text],
+.form-container form.pg-dataform input[type=date],
+.form-container form.pg-dataform select,
+.form-container form.pg-dataform input[type=file] {
+  border: 1px solid #ced4da;
+  background-color: #ffffff;
+}
+.form-container form.pg-dataform button[type=submit] {
+  background-color: #007bff;
+  color: white;
+}
+.form-container form.pg-dataform button[type=submit]:hover {
+  background-color: #0056b3;
+}
+.form-container form.pg-dataform a.btn.btn-danger {
+  background-color: #dc3545;
+}
+.form-container form.pg-dataform a.btn.btn-danger:hover {
+  background-color: #c82333;
+}
+.form-container form.pg-dataform ul.errorlist {
+  background-color: #f8d7da;
+  border-left: 6px solid #d31212;
+}
+.form-container form.pg-dataform ul.errorlist li {
+  color: #842029;
+}
+
+.accordion-body {
+  height: 100%;
+  width: 100%;
+}
+.accordion-body img {
+  height: 100%;
+  width: 100%;
 }/*# sourceMappingURL=custom.css.map */

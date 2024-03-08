@@ -1,5 +1,5 @@
 from django.db import models
-from . helperfunctions import datafile_rename,Photo_rename,special_documents_rename,community_rename,validate_image_size,Marksheet_rename,aadhar_rename
+from . helperfunctions import datafile_rename,Photo_rename,special_documents_rename,community_rename,validate_image_size,Marksheet_rename,aadhar_rename,tc_rename
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin,Group,Permission
 # Create your models here.
 
@@ -147,10 +147,10 @@ class PgStudentDetails(models.Model):
     gender=models.CharField(max_length=10,choices=GENDER)
     dateofbirth=models.DateField(null=True,blank=True)
     community=models.CharField(max_length=5,choices=COMUNNITY)
-    religion=models.CharField(max_length=20,choices=RELIGION,null=True,blank=True)
-    maratail_status=models.CharField(max_length=10,null=True,blank=True,choices=MAR_STATUS)
-    pysically_chalanged=models.CharField(max_length=5,choices=BOOLOPT,null=True,blank=True)
-    sports=models.CharField(max_length=5,choices=BOOLOPT,null=True,blank=True)
+    religion=models.CharField(max_length=20,choices=RELIGION,null=True,blank=True,)
+    maratail_status=models.CharField(max_length=10,null=True,blank=True,choices=MAR_STATUS,default='single')
+    pysically_chalanged=models.CharField(max_length=5,choices=BOOLOPT,null=True,blank=True,default='no')
+    sports=models.CharField(max_length=5,choices=BOOLOPT,null=True,blank=True,default='no')
     aadhar=models.CharField(max_length=30,null=True,blank=True)
     address=models.CharField(max_length=130,null=True,blank=True)
     distric=models.CharField(max_length=30,null=False)
@@ -166,6 +166,7 @@ class PgStudentDetails(models.Model):
     #DOCUMENTS
     photo_doc=models.ImageField(upload_to=Photo_rename, validators=[validate_image_size],null=True,blank=True)
     aadhar_doc=models.ImageField(upload_to=aadhar_rename, validators=[validate_image_size],null=True,blank=True)
+    tc_doc=models.ImageField(upload_to=tc_rename, validators=[validate_image_size],null=True,blank=True)
     marksheet_doc=models.ImageField(upload_to=Marksheet_rename, validators=[validate_image_size],null=True,blank=True)
     community_doc=models.ImageField(upload_to=community_rename, validators=[validate_image_size],null=True,blank=True)
     special_doc=models.ImageField(upload_to=special_documents_rename,null=True,blank=True, validators=[validate_image_size])
@@ -177,6 +178,7 @@ class PgStudentDetails(models.Model):
     remark=models.CharField(max_length=150,null=True,blank=True)
     fees=models.BooleanField(default=False)
     rejectedBy=models.CharField(max_length=10,null=True,blank=True)
+    aproved=models.BooleanField(default=False)
 
 
     @property

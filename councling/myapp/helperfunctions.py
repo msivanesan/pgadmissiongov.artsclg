@@ -42,6 +42,14 @@ def community_rename(instance, filename):
     new_filename = f"{title_slug}community.{ext}"
     return os.path.join('uploads/community/', new_filename)
 
+
+#rename tc
+def tc_rename(instance, filename):
+    ext = filename.split('.')[-1]
+    title_slug = slugify(instance.student.username)
+    new_filename = f"{title_slug}tc.{ext}"
+    return os.path.join('uploads/tc/', new_filename)
+
 #rename special_documents
 def special_documents_rename(instance, filename):
     ext = filename.split('.')[-1]

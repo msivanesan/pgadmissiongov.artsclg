@@ -5,7 +5,7 @@
 {%block content%}
 
 <div style="display: flex; justify-content: center;">
-{% if error%}
+{%if error%}
 <p class="splash-text"><b>{{error}}</b></p>
 {%endif%}
 </div>
@@ -15,7 +15,7 @@
     <div class="login-container">
         <h2>Login</h2>
         <div class="input-group">
-            <input type="text" name="username" placeholder="Username" required>
+            <input type="text" name="username" placeholder="Username" required style="margin-bottom: 10px;">
         </div>
         <div class="input-group">
             <input type="password" id="password" name="password" placeholder="Password" required>
@@ -23,7 +23,8 @@
                 👁️
             </span>
         </div>
-        <button type="submit" style="width: 100%; padding: 10px; border: none; background-color: #007bff; color: white; border-radius: 5px;">Login</button>
+        <button type="submit" style="width: 100%; padding: 10px; border: none; background-color: #007bff; color: white; border-radius: 5px; margin-bottom: 5px;">Login</button>
+        <a href="{%url 'resend_user'%}"  class="btn" style="width: 100%; padding: 10px; border: none; background-color: #007bff; color: white; border-radius: 5px;">Resend user name</a>
     </div>
     
 </form>

@@ -1,22 +1,56 @@
 {% extends "main.html"%}
 
-{% block title %}verification{% endblock %}
-{%block content%}
+{% block title %}Verification{% endblock %}
+{% block content %}
 <div style="display: flex; justify-content: center;">
-    {% if error%}
-    <p class="splash-text"><b>{{error}}</b></p>
-    {%endif%}
-    </div>
-<div class="login">
-<form method="post">
-    {% csrf_token %}
-    <div class="login-container">
-        <h2>OTP Authentication</h2>
-        <div class="input-group">
-            <input type="text" name="otp" placeholder="OTP" required>
-        </div> 
-        <button type="submit" style="width: 100%; padding: 10px; border: none; background-color: #007bff; color: white; border-radius: 5px;">Confim</button>
-</form>
+    {% if error %}
+    <p class="splash-text"><b>{{ error }}</b></p>
+    {% endif %}
 </div>
-{%endblock%}
-
+<div class="login">
+    <form method="post" id="otpForm">
+        {% csrf_token %}
+        <div class="login-container">
+            <h2>OTP Authentication</h2>
+            <div class="input-group">
+                <input type="text" name="otp" placeholder="OTP" id="otpInput">
+            </div> 
+            <button type="submit" style="width: 100%; padding: 10px; border: none; background-color: #007bff; color: white; border-radius: 5px; margin: 10px 0px;" name="btn" value="Confirm">Confirm</button>
+            <button type="submit" style="width: 100%; padding: 10px; background-color: #28a745; color: white; border-radius: 5px; margin: 10px 0px;" id="resendButton" name="resend" value="Resend OTP">Resend OTP</button>
+        </div>
+    </form>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var form = document.getElementById('otpForm');
+        var resendButton = document.getElementById('resendButton');
+        var otpInput = document.getElementById('otpInput');
+        
+        // Initially disable and style the resend button
+        resendButton.disabled = true;
+        resendButton.style.backgroundColor = '#ccc'; 
+        resendButton.style.color = 'black';
+    
+        // Function to handle form submission
+        form.onsubmit = function(event) {
+            var action = document.activeElement.getAttribute('name');
+    
+            // Check if the action is "confirm" and the OTP input is empty
+            if (action === 'btn' && !otpInput.value.trim()) {
+                event.preventDefault(); // Prevent form submission
+                alert('OTP is required for confirmation.'); // Inform the user
+                return false;
+            }
+            
+            return true; // Proceed with form submission if validation passes
+        }; 
+            setTimeout(function() {
+                resendButton.disabled = false; // Re-enable the resend button after 1 minute
+                // Revert button's style to its original state
+                resendButton.style.backgroundColor = '#28a745';
+                resendButton.style.color = 'white';
+            }, 60000); // 60000 milliseconds = 1 minute
+    })
+    </script>
+    
+{% endblock %}

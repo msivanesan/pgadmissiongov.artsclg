@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import Group
-from .models import CustomUserStudent,CustomUserStaff,StoreoverallData,PgStudentDetails
+from .models import CustomUserStudent,CustomUserStaff,PgStudentDetails,Department
 from django.contrib.auth.forms import UserCreationForm,UserChangeForm
 from django.contrib.auth import authenticate
 
@@ -59,7 +59,7 @@ class PgDataForm(forms.ModelForm):
         super(PgDataForm, self).__init__(*args, **kwargs)
         self.fields['name'].disabled = True
         self.fields['fathername'].required = True
-        self.fields['gender'].required = True
+        self.fields['gender'].disabled = True
         self.fields['dateofbirth'].required = True
         self.fields['religion'].required = True
         self.fields['maratail_status'].required = True
@@ -94,3 +94,11 @@ class PgDataForm(forms.ModelForm):
             self.add_error('special_doc', "This field is required if physically challenged or sports is 'YES'.")
 
         return cleaned_data
+    
+
+
+
+class pgsetform(forms.ModelForm):
+    class Meta:
+        model =Department
+        exclude=['name','ug_couse','pg_course']

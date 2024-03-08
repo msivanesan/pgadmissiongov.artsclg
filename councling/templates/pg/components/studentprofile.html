@@ -19,15 +19,15 @@
            </tr>
            <tr>
             <th scope="row">father name</th>
-            <td>murugasen g</td>
+            <td>{{data.fathername}}</td>
            </tr>
            <tr>
             <th scope="row">gender</th>
-            <td>male</td>
+            <td>{{data.gender}}</td>
            </tr>
            <tr>
             <th scope="row">date of birth</th>
-            <td>03-12-2003</td>
+            <td>{{data.dateofbirth}}</td>
            </tr>
            <tr>
             <th scope="row">community</th>
@@ -35,32 +35,28 @@
            </tr>
            <tr>
             <th scope="row">religion</th>
-            <td>hindu</td>
+            <td>{{data.religion}}</td>
            </tr>
            <tr>
             <th scope="row">marital status</th>
-            <td>single</td>
+            <td>{{data.maratail_status}}</td>
            </tr>
            <tr>
             <th scope="row">pysically chalanged</th>
-            <td>no</td>
+            <td>{{data.pysically_chalanged}}</td>
            </tr>
            <tr>
             <th scope="row">sports</th>
-            <td>no</td>
-           </tr>
-           <tr>
-            <th scope="row">religion</th>
-            <td>hindu</td>
+            <td>{{data.sports}}</td>
            </tr>
            <tr>
             <th scope="row">aadthar number</th>
-            <td>255595856565</td>
+            <td>{{data.aadhar}}</td>
            </tr>
            <tr>
             <th scope="row">address</th>
             <td >
-              523,athiparasacthi nagar, ayympalayam pudur, ayyampalayam,thiruvannamali,606603
+              {{data.address}}
             </td>
            </tr>
           </tbody>
@@ -71,7 +67,7 @@
             <button type="button" onclick="history.back();" class="btn btn-danger " style=" margin-left: 20px;">Go Back</button>
           </div>
           <div >
-          <img src="https://via.placeholder.com/600x600" alt="photo" class="border border-4 img-thumbnail" style="margin-top: 40px;" ></div>
+          <img src="{{data.photo_doc.url}}" alt="photo" class="border border-4 img-thumbnail" style="margin-top: 40px;" ></div>
         </div>
     </div>
     <!-- tille deocuments -->
@@ -92,7 +88,7 @@
             </h2>
             <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#doc-group-1" >
               <div class="accordion-body d-flex justify-content-center align-items-center bg">
-                <img src="https://via.placeholder.com/600x600" alt="Passport Size Image">
+                <img src="{{data.aadhar_doc.url}}" alt="Passport Size Image">
               </div>
             </div>
           </div>
@@ -104,7 +100,7 @@
             </h2>
             <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#doc-group-1" >
               <div class="accordion-body d-flex justify-content-center align-items-center bg ">
-                <img src="https://via.placeholder.com/600x600" alt="Passport Size Image">
+                <img src="{{data.community_doc.url}}" alt="Passport Size Image" style="height: 600;width: 300;">
               </div>
             </div>
           </div>
@@ -116,10 +112,11 @@
             </h2>
             <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#doc-group-1" >
               <div class="accordion-body d-flex justify-content-center align-items-center bg">
-                <img src="https://via.placeholder.com/600x600" alt="Passport Size Image">
+                <img src="{{data.marksheet_doc.url}}" alt="Passport Size Image">
               </div>
             </div>
           </div>
+          {%if data.special_doc%}
           <div class="accordion-item">
             <h2 class="accordion-header text-center ">
               <button class="accordion-button collapsed justify-content-center align-items-center bg-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
@@ -128,14 +125,26 @@
             </h2>
             <div id="flush-collapseFour" class="accordion-collapse collapse" data-bs-parent="#doc-group-1" >
               <div class="accordion-body d-flex justify-content-center align-items-center bg ">
-                <img src="https://via.placeholder.com/600x600" alt="Passport Size Image">
+                <img src="{{data.special_doc.url}}" alt="Passport Size Image">
               </div>
             </div>
           </div>
+          {% endif%}
+          <div class="accordion-item">
+            <h2 class="accordion-header text-center ">
+              <button class="accordion-button collapsed justify-content-center " type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
+                <b>Transfer certificate</b>
+            </button>
+          </h2>
+          <div id="flush-collapseFive" class="accordion-collapse collapse" data-bs-parent="#doc-group-1" >
+            <div class="accordion-body d-flex justify-content-center align-items-center bg" >
+              <img src="{{data.tc_doc.url}}" alt="Passport Size Image" >
+            </div>
+          </div>
+        </div>
         </div>
         
       </div>
-
     </div>
 
     <!-- EDUCATION details -->
@@ -154,23 +163,23 @@
              </tr>
             <tr>
               <th scope="row">instiution name</th>
-              <td>kkgac</td>
+              <td>{{data.instute_name}}</td>
              </tr>
              <tr>
               <th scope="row">degree</th>
-              <td>bsc computer science</td>
+              <td>{{data.degree}}</td>
              </tr>
              <tr>
               <th scope="row">mode of study</th>
-              <td>regular</td>
+              <td>{{data.mode_of_study}}</td>
              </tr>
              <tr>
               <th scope="row">medium</th>
-              <td>english</td>
+              <td>{{data.medium}}</td>
              </tr>
              <tr>
               <th scope="row">academic year</th>
-              <td>2021-2024</td>
+              <td>{{data.acadamic_year}}</td>
              </tr>
              <tr>
               <th scope="row">percentage</th>
@@ -200,8 +209,13 @@
               <th scope="row">email</th>
               <td>{{data.student.email}}</td>
              </tr>
+             <tr>
+              <th scope="row">remarks</th>
+              <td>{{data.remark}}</td>
+             </tr>
             </tbody>
           </table>
+
         </div>
     </div>
 </div>

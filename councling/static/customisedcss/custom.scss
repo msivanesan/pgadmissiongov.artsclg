@@ -42,7 +42,6 @@ body{
         text-transform: uppercase;
       }
       
-      /* Style for even items */
       &:nth-child(even) {
         background-color: $white ;
         text-transform: uppercase;
@@ -90,8 +89,6 @@ body{
     
   }
 
-
-
 .table-striped {
   thead{
     th{
@@ -104,7 +101,6 @@ body{
   }
   tbody {
     tr {
-      // Nesting th, td inside odd rows
       &:nth-child(odd) {
         th, td {
           text-transform: capitalize;
@@ -112,7 +108,6 @@ body{
         }
       }
 
-      // Nesting th, td inside even rows
       &:nth-child(even) {
         th, td {
           text-transform: capitalize;
@@ -124,19 +119,19 @@ body{
 }
 
 
-// flaoting window for controler
+
 .float-window {
   max-height: 70vh;
   width: 50vw; // Consider if width should be vw for viewport width consistency
   position: fixed;
   top: 15vh;
   left: 25%; 
-  overflow-y: auto;// Allows scrolling for more than 10 items
+  overflow-y: auto;
 }
 
 .deptopt {
   width: 100%;
-  height: 10%; // Ensure this works well with the number of items you have
+  height: 10%; 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -203,16 +198,16 @@ body{
 }
 
 /* styles.css */
-.form-control::placeholder {
-  color: rgb(34, 13, 228);
-}
-/* For cross-browser compatibility */
-.form-control:-ms-input-placeholder {
-  color: rgb(34, 13, 228);
-}
-.form-control::-ms-input-placeholder {
-  color: rgb(34, 13, 228);
-}
+// .form-control::placeholder {
+//   color: rgb(34, 13, 228);
+// }
+// /* For cross-browser compatibility */
+// .form-control:-ms-input-placeholder {
+//   color: rgb(34, 13, 228);
+// }
+// .form-control::-ms-input-placeholder {
+//   color: rgb(34, 13, 228);
+// }
 
   .loading {
     display: block;
@@ -272,7 +267,6 @@ text-align: center;
 }
 .input-group {
   position: relative;
-  margin-bottom: 20px;
 }
 input[type="text"], input[type="password"] {
   width: 100%;
@@ -310,5 +304,66 @@ input[type="text"], input[type="password"] {
   100% {
     opacity: 1;
     transform: scale(0.8);
+  }
+}
+
+
+//form styling
+.form-container{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+
+  form.pg-dataform {
+    background-color: #f0f8ff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+
+    label {
+      color: #495057; 
+      font-weight: bold;
+  }
+    input[type="text"],
+    input[type="date"],
+    select,
+    input[type="file"] {
+        border: 1px solid #ced4da;
+        background-color: #ffffff;
+    }
+    button[type="submit"] {
+      background-color: #007bff; 
+      color: white;
+  }
+    button[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+  a.btn.btn-danger {
+    background-color: #dc3545; 
+    &:hover {
+      background-color: #c82333;
+  }
+  }
+  ul.errorlist {
+    background-color: #f8d7da; 
+    border-left: 6px solid #d31212; 
+    li {
+      color: #842029; 
+  }
+}
+
+}
+}
+// fix size  for accordians
+.accordion-body{
+  height: 100%;
+  width: 100%;
+
+  img{
+    height: 100%;
+    width: 100%;
   }
 }
