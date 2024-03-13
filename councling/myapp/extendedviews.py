@@ -331,7 +331,7 @@ def pplstudent(request,list, userid):
 # def deptselect(request):
 #     dpt=models.Department.objects.all()
 #     return render(request,'office/index.html',{'department':dpt})
-
+@group_required(['office'])
 def office(request):
     dep = request.GET.get('dep', '').lower()
     search=request.GET.get('data', '').lower()
@@ -352,6 +352,7 @@ def office(request):
     }
     return render(request, 'office/listpage.html', context)
 
+@group_required(['office'])
 def stdoffice(request,userid):
     
     try:

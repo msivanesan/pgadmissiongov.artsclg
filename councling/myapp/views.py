@@ -25,6 +25,8 @@ def user_login(request):
             return redirect('principal',list='admited')
         elif request.user.role=='student':
             return redirect('pgregister')
+        elif user.role=='office':
+            return redirect('office')
         else:
             return HttpResponse("you have no user role")
     error_message=None
@@ -72,6 +74,8 @@ def otp_auth(request):
                             return redirect('principal',list='admited')
                         elif user.role=='student':
                             return redirect('pgregister')
+                        elif user.role=='office':
+                            return redirect('office')
                         else:
                             return HttpResponse("you have no user role")
                     else:
