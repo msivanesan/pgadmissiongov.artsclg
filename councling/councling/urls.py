@@ -20,6 +20,6 @@ from myapp.admin import cusadmin
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    path('cusadmin/', cusadmin.urls),
+    path('cusadmin/',cusadmin.urls),
     path('',include('myapp.urls'))
 ]

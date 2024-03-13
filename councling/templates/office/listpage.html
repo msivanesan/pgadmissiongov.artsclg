@@ -7,6 +7,14 @@
     {% include 'logoutbar.html' %} 
     <div class="row ">
         <div class="col-md-10 col-xl-10 col-xxl-10 bg ">
+            <div >
+                <form action="." method="get" style="display: flex;">
+                    {% csrf_token %}
+                    <input type="text" name="data" style="margin-bottom:2px solid ;" 
+                    class="form-control" placeholder="enter the register number or name">
+                    <button type="submit" class="btn btn-success border" style="border-radius: 20px;" name="Search" value="Search">Search</button>
+                </form>
+            </div>
             {% include 'pg/components/studentlist.html' %}
         </div>
         <div class="col-md-2 col-xl-2 col-xxl-2 bg  m-0 p-0" style="background-color: white; overflow-y: auto;">

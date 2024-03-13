@@ -36,3 +36,13 @@ def otp_generate(request):
         print(f'The OTP is :  {generated_otp}')
     else:
         print("User not found.")
+
+
+def sendstatus(email,status):
+    send_mail(
+            'Status Of Your Application',
+            status,
+            'settings.EMAIL_HOST_USER',
+            ['msivanesan2003@gmail.com'],
+            fail_silently=False,
+        )

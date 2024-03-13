@@ -4,7 +4,7 @@
 {% block content %}
 <div style="display: flex; justify-content: center;">
     {% if error %}
-    <p class="splash-text"><b>{{ error }}</b></p>
+    <p class="splash-text" ><b id="error">{{ error }}</b></p>
     {% endif %}
 </div>
 <div class="login">
@@ -25,8 +25,17 @@
         var form = document.getElementById('otpForm');
         var resendButton = document.getElementById('resendButton');
         var otpInput = document.getElementById('otpInput');
-        
+        var err=document.getElementById('error');
         // Initially disable and style the resend button
+        if(err) {
+        
+            console.log("works")
+            resendButton.disabled = false; // Re-enable the resend button after 1 minute
+                // Revert button's style to its original state
+                resendButton.style.backgroundColor = '#28a745';
+                resendButton.style.color = 'white';
+        }
+        else{   
         resendButton.disabled = true;
         resendButton.style.backgroundColor = '#ccc'; 
         resendButton.style.color = 'black';
@@ -49,7 +58,7 @@
                 // Revert button's style to its original state
                 resendButton.style.backgroundColor = '#28a745';
                 resendButton.style.color = 'white';
-            }, 60000); // 60000 milliseconds = 1 minute
+            }, 60000); }
     })
     </script>
     

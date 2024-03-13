@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from django.http import HttpResponse,Http404
 from . import models
+from django.db.models import Q
 from . import forms
 from django.views.decorators.cache import never_cache
 import csv
 from . decoraters import group_required
+from .utils import sendstatus
 # select department in controler
 @group_required(['controler'])
 def setchange(request,department):
@@ -135,12 +137,14 @@ def constudent(request,department,list,userid):
                 dpt.pg_oc-=1
             else:
                 return HttpResponse('some thing went worng')
+            sendstatus(data.student.email,f'your application {data.student.username} has been aproved by controler and forworded to department')
             dpt.save()
             data.save()
         elif request.POST['action']=='reject':
             data.status='rejected'
             data.rejectedBy='controler'
             data.remark=request.POST.get('remark', '') 
+            sendstatus(data.student.email,f'your application {data.student.username} has been rejected by controler')
             data.save()
         return redirect('depcontroler',department=department, list=list)
     else:
@@ -220,6 +224,7 @@ def depstudent(request,department,list,userid):
         if request.POST['action']== 'admit':
             data.status='admited'
             data.remark=request.POST.get('remark', '')   
+            sendstatus(data.student.email,f'your application {data.student.username} has been aproved by department you are admited to your collage')
             data.save()
         elif request.POST['action']=='reject':
             data.status='rejected'
@@ -239,6 +244,7 @@ def depstudent(request,department,list,userid):
                 dpt.pg_sca+=1
             elif data.resevation=='st':
                 dpt.pg_st+=1
+            sendstatus(data.student.email,f'your application {data.student.username} has been rejected department')
             dpt.save()
             data.save()
         return redirect('department',department=department, list=list)
@@ -328,9 +334,11 @@ def pplstudent(request,list, userid):
 
 def office(request):
     dep = request.GET.get('dep', '').lower()
+    search=request.GET.get('data', '').lower()
     try:
         dpt = models.Department.objects.all()
-        data=models.PgStudentDetails.objects.filter(status='admited').filter(aproved=True)
+        data=models.PgStudentDetails.objects.filter(status='admited').filter(aproved=True).filter(Q(student__username__icontains=search)|Q(name__icontains=search))
+
     except Exception as e:
         return HttpResponse(e)
     if dep == 'all' or dep == '':
@@ -344,5 +352,17 @@ def office(request):
     }
     return render(request, 'office/listpage.html', context)
 
-def stdoffice(reqest,department,usedid):
-    return HttpResponse(department)
+def stdoffice(request,userid):
+    
+    try:
+        data = models.PgStudentDetails.objects.filter(details_submited=True).filter(aproved=True).get(student__username=userid)
+    except models.PgStudentDetails.DoesNotExist:
+        raise Http404("Student details not found.")
+    except Exception as e:
+        return HttpResponse(e)
+    if request.method=='POST':
+        data.fees=True
+        data.save()
+        redirect('office')
+    context = {'data': data}
+    return render(request, 'office/student.html', context)

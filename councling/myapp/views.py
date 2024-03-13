@@ -33,9 +33,9 @@ def user_login(request):
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            otp_generate(request)
             request.session['username']=username
             request.session['password']=password
+            otp_generate(request)
             return redirect('otp_auth')
         else:
             error_message='invalid username or password'

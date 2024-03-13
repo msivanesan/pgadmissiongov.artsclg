@@ -1,0 +1,17 @@
+{% extends "main.html"%}
+{% block title %}controler student{% endblock %}
+
+{% block content %}
+<div class="container-fluid m-0 p-0" style="max-width: 99%;">
+    {% include 'logoutbar.html' %} 
+    {% include 'pg/components/studentprofile.html' %}
+    {% if data.fees%}
+    <form action="." method="post" style="align-items: center; margin-left: 45%;">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success">PAYED</button>
+    </form>
+    {%else%}
+     <button type="submit" style="align-items: center; margin-left: 45%;"class="btn btn-success">ALREDY PAYED</button>
+    {%endif%}
+    
+{% endblock %}

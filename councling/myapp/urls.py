@@ -18,7 +18,7 @@ urlpatterns = [
     path('principal/<str:list>/',view.principal,name='principal'),
     path('principal/<str:list>/<str:userid>',view.pplstudent,name="pplstudent"),
     path('office/',view.office,name='office'),
-    path('office/<str:department>/<str:userid>',view.stdoffice,name='stdoffice')
+    path('office/<str:userid>',view.stdoffice,name='stdoffice')
 ]
 
 if settings.DEBUG:
