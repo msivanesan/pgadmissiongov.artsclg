@@ -152,3 +152,11 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'tvmkkgac@gmail.com'
 EMAIL_HOST_PASSWORD = 'sajt ouzl uzbo fnlk'
+
+#sms backend
+SMS_URL='https://www.fast2sms.com/dev/bulkV2'
+HEADER = {
+    'authorization': "3AViJNxzcWFCO4BY21juqUEaSDmRf8Mv7y0HsQPbd6l9gLIkXtsjhr80quEwXgdU1MW74ZzmYtxRIBQa",
+    'Content-Type': "application/x-www-form-urlencoded",
+    'Cache-Control': "no-cache",
+    }
