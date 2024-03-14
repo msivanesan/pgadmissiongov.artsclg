@@ -29,20 +29,19 @@ def otp_generate(request):
         try:
             usr = models.CustomUserStudent.objects.get(username=request.session['username'])
         except models.CustomUserStudent.DoesNotExist as e:
-            print(e)
-    #send sms
-    phone_number = "6369315541"  # This should be dynamic based on user information
-    payload = f"variables_values={generated_otp}&route=otp&numbers={phone_number}"
-    response = requests.post(SMS_URL, data=payload, headers=HEADER)
-
-    # Check response status
-    if response.status_code == 200:
-        print("SMS sent successfully")
-    else:
-        print(f"Failed to send SMS. Status code: {response.status_code}, Response: {response.text}")
-    print(usr)
-    print(usr.email)        
+            print(e)     
     if usr:     
+        #send sms
+        phone_number = usr.phone_number # This should be dynamic based on user information
+        payload = f"variables_values={generated_otp}&route=otp&numbers={phone_number}"
+        response = requests.post(SMS_URL, data=payload, headers=HEADER)
+        # Check response status
+        if response.status_code == 200:
+            print("SMS sent successfully")
+        else:
+            print(f"Failed to send SMS. Status code: {response.status_code}, Response: {response.text}")
+        print(usr)
+        print(usr.email)   
         send_mail(
             'OTP FOR YOUR ACCOUNT',
             "The Otp for your Account is : " + generated_otp,
