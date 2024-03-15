@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure--*u+!8ns16w(#t*jmf5o5(e@v6gf!uu*iqe^py=7zym6(okj&t
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.vercel.app','now.sh','127.0.0.1','localhost']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'myapp',
     'crispy_forms',
     "crispy_bootstrap4",
+    'storages',
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -170,3 +171,32 @@ HEADER = {
     'Content-Type': "application/x-www-form-urlencoded",
     'Cache-Control': "no-cache",
     }
+
+
+#aws 
+
+AWS_ACCESS_KEY_ID='AKIAYS2NV34XJIWRRKWU'
+AWS_SECRET_ACCESS_KEY='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'
+
+
+AWS_STORAGE_BUCKET_NAME='ounline-councling'
+AWS_S3_CUSTOM_DOMAIN='%s.s3.amazonaws.com'% AWS_STORAGE_BUCKET_NAME
+AWS_S3_FILE_OVERWRITE=False
+# older version django
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+
+
+STORAGES = {
+
+    # Media file (image) management   
+    "default": {
+        "BACKEND": "storages.backends.s3boto3.S3StaticStorage",
+    },
+    
+    # CSS and JS file management
+    "staticfiles": {
+        "BACKEND": "storages.backends.s3boto3.S3StaticStorage",
+    },
+}
