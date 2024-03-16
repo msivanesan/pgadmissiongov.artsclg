@@ -50,7 +50,7 @@ class customUserLoginForm(forms.Form):
 class PgDataForm(forms.ModelForm):
     class Meta:
         model = PgStudentDetails
-        exclude = ('student', 'status', 'details_submited', 'resevation', 'fees','rejectedBy','remark','distric')
+        exclude = ('student', 'status', 'details_submited', 'resevation', 'fees','rejectedBy','remark','distric','aproved')
         widgets = {
             'dateofbirth': forms.DateInput(attrs={'type': 'date'}),
         }

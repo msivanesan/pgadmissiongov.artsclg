@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'myapp',
     'crispy_forms',
     "crispy_bootstrap4",
-    'storages',
+   'storages'
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -149,9 +149,6 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'myapp.CustomUserStaff'
 
-#for cripsy themes
-CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
-CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 # for logout after user close the browser
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
@@ -173,7 +170,7 @@ HEADER = {
     }
 
 
-#aws 
+# #aws 
 
 AWS_ACCESS_KEY_ID='AKIAYS2NV34XJIWRRKWU'
 AWS_SECRET_ACCESS_KEY='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'
@@ -182,9 +179,10 @@ AWS_SECRET_ACCESS_KEY='xZxDblwsbrcLwfSSt7kz/9WNavHBe2n6tXOEyTF+'
 AWS_STORAGE_BUCKET_NAME='ounline-councling'
 AWS_S3_CUSTOM_DOMAIN='%s.s3.amazonaws.com'% AWS_STORAGE_BUCKET_NAME
 AWS_S3_FILE_OVERWRITE=False
-# older version django
-# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+# # older version django
+# # DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 
 

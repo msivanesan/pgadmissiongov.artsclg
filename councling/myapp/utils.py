@@ -39,9 +39,7 @@ def otp_generate(request):
         if response.status_code == 200:
             print("SMS sent successfully")
         else:
-            print(f"Failed to send SMS. Status code: {response.status_code}, Response: {response.text}")
-        print(usr)
-        print(usr.email)   
+            print(f"Failed to send SMS. Status code: {response.status_code}, Response: {response.text}") 
         send_mail(
             'OTP FOR YOUR ACCOUNT',
             "The Otp for your Account is : " + generated_otp,
@@ -62,6 +60,3 @@ def sendstatus(email,status):
             ['msivanesan2003@gmail.com'],
             fail_silently=False,
         )
-    
-
-    

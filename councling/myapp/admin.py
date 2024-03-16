@@ -1,3 +1,4 @@
+
 from django.contrib import admin
 from django.urls import path
 from django.utils.crypto import get_random_string
@@ -30,13 +31,12 @@ class CustomUserStaffAdmin(UserAdmin):
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
         ('Personal info', {'fields': ('email','phone_number','department','role')}),
-        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser',
-                                    'groups')}),
+        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser')}),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ( 'username','email','phone_number', 'password1', 'password2', 'is_active','department','role','groups')}
+            'fields': ( 'username','email','phone_number', 'password1', 'password2', 'is_active','department','role')}
         ),
     )
 
@@ -106,7 +106,24 @@ class PgStudentDetailsadmin(admin.ModelAdmin):
                     email = row['Email']
                     phonenumber = row['Mobile']
                     password = get_random_string(10)
-                    user, user_created = CustomUserStudent.objects.get_or_create(email=email, defaults={'username': username, 'phone_number': phonenumber})
+                    user = CustomUserStudent.objects.filter(username=username).first()
+                    if user:
+                        # If user exists, no need to create a new one, just update the necessary fields
+                        user.username = username  # Assuming you want to update the username
+                        user.phone_number = phonenumber
+                        # User's password and other fields can be updated here as needed
+                        user.save()
+                        user_created = False
+                    else:
+                        try:
+                            user = CustomUserStudent.objects.create(email=email, username=username, phone_number=phonenumber)
+                            user.set_password(password)
+                            user.password_created = password  # Store the raw password if necessary
+                            user.save()
+                            user_created = True
+                        except Exception as e:
+                            reportList.append([username, '', e])
+                            continue 
                     if user_created:
                         user.set_password(password)
                         user.password_created = password  # Store the raw password if necessary
@@ -121,9 +138,9 @@ class PgStudentDetailsadmin(admin.ModelAdmin):
                             defaults={
                                 'name': row['Name'],
                                 'gender': row['Gender'].lower(),
-                                'district': row['District'],
+                                'distric': row['District'],
                                 'community': row['Community'].lower(),
-                                'percentage_obtained': row['Percentage_mark'],
+                                'percentageoptained': row['Percentage_mark'],
                                 'Department': dept,
                                 'status': 'applied'
                             }
@@ -139,14 +156,7 @@ class PgStudentDetailsadmin(admin.ModelAdmin):
                                     fail_silently=False,
                                 )
                         else:
-                            reportList.append([username, dept,'Data already exists'])
-                            send_mail(
-                                    'USER NAME AND PASSWORD FOR YOUR ACCOUNT',
-                                    'USERNAME : '+username +'  PASSWORD : ' + password,
-                                    'settings.EMAIL_HOST_USER',
-                                    ['msivanesan2003@gmail.com'],
-                                    fail_silently=False,
-                                )
+                            reportList.append([username, dept,'Data already exist'])
                     except Department.DoesNotExist:
                         reportList.append([username, de,'Has no department'])
 
@@ -173,7 +183,3 @@ cusadmin.register(CustomUserStudent, CustomUserStudentAdmin)
 cusadmin.register(Department)
 cusadmin.register(PgStudentDetails,PgStudentDetailsadmin)
 cusadmin.register(StoreoverallData)
-
-
-
-

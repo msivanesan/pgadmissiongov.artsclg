@@ -1,5 +1,5 @@
 {% extends "admin/base.html" %}
-
+{% load static %}
 {% block extrastyle %}
 <style>
     #loading {
@@ -62,7 +62,7 @@ input[type="file"]{
 
 {% block content %}
 <div id="loading">
-    <img src="https://loading.io/spinners/double-ring/lg.double-ring-spinner.gif" alt="Loading...">
+    <img src="{% static '/assert/css/loder.gif'%}" alt="Loading...">
 
 </div>
 <div class="login">
