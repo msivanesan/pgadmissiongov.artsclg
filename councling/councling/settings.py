@@ -85,23 +85,13 @@ WSGI_APPLICATION = 'councling.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': 'ZBxOqBhjldcERAAVanujKMqbXjEKDrdN',
-        'HOST': 'roundhouse.proxy.rlwy.net',
-        'PORT': '56893',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -164,37 +154,9 @@ EMAIL_HOST_PASSWORD = 'sajt ouzl uzbo fnlk'
 #sms backend
 SMS_URL='https://www.fast2sms.com/dev/bulkV2'
 HEADER = {
-    'authorization': "3AViJNxzcWFCO4BY21juqUEaSDmRf8Mv7y0HsQPbd6l9gLIkXtsjhr80quEwXgdU1MW74ZzmYtxRIBQa",
+    'authorization': "",//fast2sms autentication token  
     'Content-Type': "application/x-www-form-urlencoded",
     'Cache-Control': "no-cache",
     }
 
 
-# #aws 
-
-AWS_ACCESS_KEY_ID='AKIAYS2NV34XJIWRRKWU'
-AWS_SECRET_ACCESS_KEY='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'
-
-
-AWS_STORAGE_BUCKET_NAME='ounline-councling'
-AWS_S3_CUSTOM_DOMAIN='%s.s3.amazonaws.com'% AWS_STORAGE_BUCKET_NAME
-AWS_S3_FILE_OVERWRITE=False
-
-# # older version django
-# # DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-# # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
-
-
-STORAGES = {
-
-    # Media file (image) management   
-    "default": {
-        "BACKEND": "storages.backends.s3boto3.S3StaticStorage",
-    },
-    
-    # CSS and JS file management
-    "staticfiles": {
-        "BACKEND": "storages.backends.s3boto3.S3StaticStorage",
-    },
-}
