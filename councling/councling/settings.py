@@ -148,8 +148,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'tvmkkgac@gmail.com'
-EMAIL_HOST_PASSWORD = 'sajt ouzl uzbo fnlk'
+EMAIL_HOST_USER = '' # Give your email  
+EMAIL_HOST_PASSWORD = ''# give your app passcode that created on email your accout app passcode  
 
 #sms backend
 SMS_URL='https://www.fast2sms.com/dev/bulkV2'
