@@ -36,9 +36,6 @@ Screenshots and charts can be added here to visually represent:
 - Admin panel
 - Admission status overview
 
-Example:
-![Dashboard View](screenshots/dashboard.png)
-![Student List](screenshots/students.png)
 
 ## ⚙️ Installation & Setup
 1. Clone the repository  
